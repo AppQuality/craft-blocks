@@ -1,4 +1,4 @@
-import { useNode } from '@craftjs/core';
+import { useNode } from "@craftjs/core";
 import {
   Button as AppqButton,
   Select,
@@ -6,13 +6,13 @@ import {
   BSCol,
   FormLabel,
   Input
-} from '@appquality/appquality-design-system';
-import React from 'react';
-import { MarginSettings, useMargins } from './generic/Margins';
+} from "@appquality/appquality-design-system";
+import React from "react";
+import { MarginSettings, useMargins } from "./generic/Margins";
 
 export const Button = ({ size, link, color, text, ...props }) => {
   const {
-    connectors: { connect, drag },
+    connectors: { connect, drag }
   } = useNode();
   const marginClass = useMargins(props);
   return (
@@ -27,27 +27,26 @@ export const Button = ({ size, link, color, text, ...props }) => {
 export const ButtonSettings = () => {
   const {
     actions: { setProp },
-    props,
+    props
   } = useNode(node => ({
-    props: node.data.props,
+    props: node.data.props
   }));
 
   const sizeOptions = [
-    { label: 'Small', value: 'sm' },
-    { label: 'Medium', value: 'medium' },
-    { label: 'Large', value: 'lg' },
+    { label: "Small", value: "sm" },
+    { label: "Medium", value: "medium" },
+    { label: "Large", value: "lg" }
   ];
   const currentSize = sizeOptions.find(o => o.value === props.size);
   const colorOptions = [
-    { label: 'Primary', value: 'primary' },
-    { label: 'Secondary', value: 'secondary' },
-    { label: 'Success', value: 'success' },
-    { label: 'Warning', value: 'warning' },
-    { label: 'Danger', value: 'danger' },
-    { label: 'Info', value: 'info' },
+    { label: "Primary", value: "primary" },
+    { label: "Secondary", value: "secondary" },
+    { label: "Success", value: "success" },
+    { label: "Warning", value: "warning" },
+    { label: "Danger", value: "danger" },
+    { label: "Info", value: "info" }
   ];
   const currentColor = colorOptions.find(o => o.value === props.color);
-  console.log(currentColor)
   return (
     <BSGrid>
       <BSCol size="col-12 aq-mb-3">
@@ -60,7 +59,7 @@ export const ButtonSettings = () => {
       <BSCol size="col-12 aq-mb-3">
         <FormLabel htmlfor="input-link" label="Link" />
         <Input
-          onChange={e => setProp(props => (props.link = e ))}
+          onChange={e => setProp(props => (props.link = e))}
           value={props.link}
         />
       </BSCol>
@@ -90,13 +89,14 @@ export const ButtonSettings = () => {
 };
 
 export const ButtonDefaultProps = {
-  color: 'primary',
-  text: 'Click me',
+  color: "primary",
+  text: "Click me",
+  size: "medium"
 };
 
 Button.craft = {
   props: ButtonDefaultProps,
   related: {
-    settings: ButtonSettings,
-  },
+    settings: ButtonSettings
+  }
 };
