@@ -1,3 +1,15 @@
+# v0.1.5 (Fri Jul 09 2021)
+
+#### ⚠️ Pushed to `main`
+
+- ci: Use react as peer dep (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.4 (Fri Jul 09 2021)
 
 #### ⚠️ Pushed to `main`
