@@ -1,3 +1,15 @@
+# v0.1.3 (Fri Jul 09 2021)
+
+#### ⚠️ Pushed to `main`
+
+- fix: Copy modules and css (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.2 (Fri Jul 09 2021)
 
 #### ⚠️ Pushed to `main`
