@@ -10,6 +10,18 @@
 
 ---
 
+# v0.1.9 (Fri Jul 09 2021)
+
+#### ⚠️ Pushed to `main`
+
+- ci: Build and inject css modules (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.8 (Fri Jul 09 2021)
 
 #### ⚠️ Pushed to `main`
