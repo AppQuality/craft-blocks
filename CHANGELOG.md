@@ -1,3 +1,15 @@
+# v0.1.6 (Fri Jul 09 2021)
+
+#### ⚠️ Pushed to `main`
+
+- chore: Fix eslint and remove useeffect (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.5 (Fri Jul 09 2021)
 
 #### ⚠️ Pushed to `main`
