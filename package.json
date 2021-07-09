@@ -1,5 +1,5 @@
 {
-  "name": "craft-blocks",
+  "name": "@appquality/craft-blocks",
   "version": "0.1.1",
   "main": "build/index",
   "dependencies": {
