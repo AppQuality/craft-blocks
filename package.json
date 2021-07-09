@@ -1,6 +1,6 @@
 {
   "name": "craft-blocks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "build/index",
   "dependencies": {
     "@appquality/appquality-design-system": "^0.1.84",
