@@ -1,3 +1,15 @@
+# v0.1.7 (Fri Jul 09 2021)
+
+#### ⚠️ Pushed to `main`
+
+- wip: Remove craftjs from export (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.6 (Fri Jul 09 2021)
 
 #### ⚠️ Pushed to `main`
