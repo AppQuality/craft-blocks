@@ -5,7 +5,7 @@ import {
   convertToRaw,
   convertFromRaw,
 } from 'draft-js';
-import 'draft-js/dist/Draft.css';
+import './Draft.css';
 import editorStyles from './editorStyles.module.css';
 import buttonStyles from './buttonStyles.module.css';
 import toolbarStyles from './toolbarStyles.module.css';
@@ -75,9 +75,7 @@ export const WysiwygSettings = () => {
           onChange={updateEditor}
           plugins={plugins}
         />
-        <div style={{ display: showToolbar ? 'block' : 'block' }}>
-          <Toolbar />
-        </div>
+        <Toolbar />
       </div>
       <div>
         <MarginSettings props={props} setProp={setProp} />

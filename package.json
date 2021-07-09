@@ -1,7 +1,7 @@
 {
   "name": "@appquality/craft-blocks",
   "version": "0.1.8",
-  "main": "build/index",
+  "main": "build/index.js",
   "dependencies": {
     "@appquality/appquality-design-system": "^0.1.84",
     "@craftjs/core": "0.1.0-beta.19",
@@ -9,8 +9,7 @@
     "@draft-js-plugins/static-toolbar": "^4.1.1",
     "draft-js": "^0.11.7",
     "react-contenteditable": "^3.3.5",
-    "react-scripts": "4.0.3",
-    "rollup-plugin-import-css": "^3.0.0"
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "copy-files": "copyfiles package*.json build/ && cp -r node_modules/ build/ ",
@@ -54,6 +53,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "rollup": "^2.53.0"
+    "rollup": "^2.53.0",
+    "rollup-plugin-styles": "^3.14.1"
   }
 }
