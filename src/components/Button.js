@@ -37,7 +37,7 @@ export const ButtonSettings = () => {
     { label: 'Medium', value: 'medium' },
     { label: 'Large', value: 'lg' },
   ];
-  const currentSize = sizeOptions.find(o => o.value == props.size);
+  const currentSize = sizeOptions.find(o => o.value === props.size);
   const colorOptions = [
     { label: 'Primary', value: 'primary' },
     { label: 'Secondary', value: 'secondary' },
@@ -46,7 +46,7 @@ export const ButtonSettings = () => {
     { label: 'Danger', value: 'danger' },
     { label: 'Info', value: 'info' },
   ];
-  const currentColor = colorOptions.find(o => o.value == props.color);
+  const currentColor = colorOptions.find(o => o.value === props.color);
   console.log(currentColor)
   return (
     <BSGrid>

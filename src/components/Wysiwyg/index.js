@@ -2,8 +2,6 @@ import { useNode } from '@craftjs/core';
 import React from 'react';
 import {
   EditorState as DraftJsState,
-  ContentState as DraftJsContentState,
-  convertFromHTML,
   convertToRaw,
   convertFromRaw,
 } from 'draft-js';

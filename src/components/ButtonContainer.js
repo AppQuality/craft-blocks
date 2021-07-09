@@ -46,43 +46,43 @@ export const ButtonContainerSettings = () => {
           onChange={e => setProp(props => (props.positions = e.target.value))}
         >
           <option
-            selected={typeof props.positions == 'undefined' ? true : false}
+            selected={typeof props.positions === 'undefined' ? true : false}
             value="none"
           >
             None
           </option>
           <option
-            selected={props.positions == 'center' ? true : false}
+            selected={props.positions === 'center' ? true : false}
             value="center"
           >
             Center
           </option>
           <option
-            selected={props.positions == 'space-between' ? true : false}
+            selected={props.positions === 'space-between' ? true : false}
             value="space-between"
           >
             Space Between
           </option>
           <option
-            selected={props.positions == 'space-around' ? true : false}
+            selected={props.positions === 'space-around' ? true : false}
             value="space-around"
           >
             Space Around
           </option>
           <option
-            selected={props.positions == 'space-evenly' ? true : false}
+            selected={props.positions === 'space-evenly' ? true : false}
             value="space-evenly"
           >
             Space Evenly
           </option>
           <option
-            selected={props.positions == 'flex-end' ? true : false}
+            selected={props.positions === 'flex-end' ? true : false}
             value="flex-end"
           >
             Right
           </option>
           <option
-            selected={props.positions == 'flex-start' ? true : false}
+            selected={props.positions === 'flex-start' ? true : false}
             value="flex-start"
           >
             Left
