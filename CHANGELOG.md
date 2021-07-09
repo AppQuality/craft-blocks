@@ -1,3 +1,15 @@
+# v0.1.4 (Fri Jul 09 2021)
+
+#### ⚠️ Pushed to `main`
+
+- ci: Compile css with babel (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.3 (Fri Jul 09 2021)
 
 #### ⚠️ Pushed to `main`
