@@ -1,5 +1,17 @@
 # v0.1.8 (Fri Jul 09 2021)
 
+#### ⚠️ Pushed to `main`
+
+- ci: Build with rollup (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
+# v0.1.8 (Fri Jul 09 2021)
+
 
 
 ---
