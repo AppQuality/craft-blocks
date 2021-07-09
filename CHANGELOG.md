@@ -1,3 +1,15 @@
+# v0.1.10 (Fri Jul 09 2021)
+
+#### ⚠️ Pushed to `main`
+
+- docs: Add default size to button (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.9 (Fri Jul 09 2021)
 
 #### ⚠️ Pushed to `main`
