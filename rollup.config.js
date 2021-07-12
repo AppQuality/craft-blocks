@@ -20,6 +20,6 @@ export default [
         modules: true
       })
     ],
-    external: ["react", "react-dom"]
+    external: ["react", "react-dom", "@appquality/appquality-design-system"]
   }
 ];
