@@ -1,3 +1,16 @@
+# v0.1.11 (Mon Jul 12 2021)
+
+#### ⚠️ Pushed to `main`
+
+- feat: Add appq-des-system as peer (davide.bizzi@app-quality.com)
+- chore: Update library (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.10 (Fri Jul 09 2021)
 
 #### ⚠️ Pushed to `main`
