@@ -1,23 +1,24 @@
-import { useNode } from '@craftjs/core';
-import { FormLabel, BSGrid, BSCol } from '@appquality/appquality-design-system';
-import React, { useState, useEffect } from 'react';
-import ContentEditable from 'react-contenteditable';
-import { MarginSettings, useMargins } from './generic/Margins';
+import { useNode } from "@craftjs/core";
+import { FormLabel, BSGrid, BSCol } from "@appquality/appquality-design-system";
+import React, { useState, useEffect } from "react";
+import ContentEditable from "react-contenteditable";
+import { MarginSettings, useMargins } from "./generic/Margins";
 
 export const Text = ({ text, fontSize, textAlign, ...props }) => {
   const {
     connectors: { connect, drag },
     selected,
-    actions: { setProp },
+    actions: { setProp }
   } = useNode(state => ({
     selected: state.events.selected,
-    dragged: state.events.dragged,
+    dragged: state.events.dragged
   }));
 
   const marginClass = useMargins(props || {});
-  const className = props.className
+  let className = props.className
     ? `${props.className} ${marginClass}`
     : marginClass;
+  if (selected) className = `${className} craftjs-node-selected`;
 
   const [editable, setEditable] = useState(false);
 
@@ -42,7 +43,7 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
         onChange={e =>
           setProp(
             props =>
-              (props.text = e.target.value.replace(/<\/?[^>]+(>|$)/g, '')),
+              (props.text = e.target.value.replace(/<\/?[^>]+(>|$)/g, "")),
             500
           )
         }
@@ -57,10 +58,10 @@ const TextSettings = () => {
   const {
     actions: { setProp },
     fontSize,
-    props,
+    props
   } = useNode(node => ({
     text: node.data.props.text,
-    fontSize: node.data.props.fontSize,
+    fontSize: node.data.props.fontSize
   }));
 
   return (
@@ -85,13 +86,13 @@ const TextSettings = () => {
 };
 
 export const TextDefaultProps = {
-  text: 'Hi',
-  fontSize: 20,
+  text: "Hi",
+  fontSize: 20
 };
 
 Text.craft = {
   props: TextDefaultProps,
   related: {
-    settings: TextSettings,
-  },
+    settings: TextSettings
+  }
 };

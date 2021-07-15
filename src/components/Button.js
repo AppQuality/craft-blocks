@@ -12,11 +12,16 @@ import { MarginSettings, useMargins } from "./generic/Margins";
 
 export const Button = ({ size, link, color, text, ...props }) => {
   const {
-    connectors: { connect, drag }
-  } = useNode();
-  const marginClass = useMargins(props);
+    connectors: { connect, drag },
+    isSelected
+  } = useNode(node => ({
+    isSelected: node.events.selected
+  }));
+  let className = useMargins(props);
+  if (isSelected) className = `${className} craftjs-node-selected`;
+
   return (
-    <span className={marginClass} {...props} ref={ref => connect(drag(ref))}>
+    <span className={className} {...props} ref={ref => connect(drag(ref))}>
       <AppqButton size={size} type={color} as="a" href={link}>
         {text}
       </AppqButton>

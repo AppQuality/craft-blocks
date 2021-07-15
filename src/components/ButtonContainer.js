@@ -7,8 +7,12 @@ import { MarginSettings, useMargins } from './generic/Margins';
 export const ButtonContainer = ({ children, positions, ...props }) => {
   const {
     connectors: { connect, drag },
-  } = useNode();
-  const marginClass = useMargins(props);
+    isSelected
+  } = useNode(node => ({
+    isSelected: node.events.selected
+  }));
+  let className = useMargins(props);
+  if (isSelected) className = `${className} craftjs-node-selected`;
 
   const style = { display: 'flex' };
   if (positions) {
@@ -17,7 +21,7 @@ export const ButtonContainer = ({ children, positions, ...props }) => {
 
   return (
     <div
-      className={marginClass}
+      className={className}
       style={style}
       {...props}
       ref={ref => connect(drag(ref))}
