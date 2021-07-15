@@ -1,3 +1,15 @@
+# v0.1.12 (Thu Jul 15 2021)
+
+#### ⚠️ Pushed to `main`
+
+- feat: Add class to selected blocks (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.11 (Mon Jul 12 2021)
 
 #### ⚠️ Pushed to `main`
