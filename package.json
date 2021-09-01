@@ -7,8 +7,7 @@
     "@draft-js-plugins/editor": "^4.1.0",
     "@draft-js-plugins/static-toolbar": "^4.1.1",
     "draft-js": "^0.11.7",
-    "react-contenteditable": "^3.3.5",
-    "react-scripts": "4.0.3"
+    "react-contenteditable": "^3.3.5"
   },
   "scripts": {
     "copy-files": "copyfiles package*.json build/ && cp -r node_modules/ build/ ",
@@ -43,6 +42,7 @@
     "@appquality/appquality-design-system": "^0.1.84"
   },
   "devDependencies": {
+    "react-scripts": "4.0.3",
     "@appquality/appquality-design-system": "^0.1.86",
     "styled-components": "^5.3.0",
     "@babel/cli": "^7.14.5",
