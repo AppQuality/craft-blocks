@@ -1,3 +1,15 @@
+# v0.1.14 (Thu Sep 02 2021)
+
+#### ⚠️ Pushed to `main`
+
+- feat: Always use buttons as target blank (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.13 (Wed Sep 01 2021)
 
 #### ⚠️ Pushed to `main`
