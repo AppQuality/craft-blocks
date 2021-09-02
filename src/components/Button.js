@@ -22,7 +22,7 @@ export const Button = ({ size, link, color, text, ...props }) => {
 
   return (
     <span className={className} {...props} ref={ref => connect(drag(ref))}>
-      <AppqButton size={size} type={color} as="a" href={link}>
+      <AppqButton size={size} type={color} as="a" href={link} target="_blank">
         {text}
       </AppqButton>
     </span>
