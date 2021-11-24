@@ -1,3 +1,15 @@
+# v0.1.16 (Wed Nov 24 2021)
+
+#### ⚠️ Pushed to `main`
+
+- feat: Update craftjs (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.15 (Thu Sep 02 2021)
 
 
