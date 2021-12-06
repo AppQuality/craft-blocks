@@ -1,3 +1,15 @@
+# v0.1.17 (Mon Dec 06 2021)
+
+#### ⚠️ Pushed to `main`
+
+- chore: Update library (davide.bizzi@app-quality.com)
+
+#### Authors: 1
+
+- Davide Bizzi (davide.bizzi@app-quality.com)
+
+---
+
 # v0.1.16 (Wed Nov 24 2021)
 
 #### ⚠️ Pushed to `main`
