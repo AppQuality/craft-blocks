@@ -57,5 +57,15 @@
     "rollup": "^2.53.0",
     "rollup-plugin-styles": "^3.14.1",
     "styled-components": "^5.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AppQuality/craft-blocks.git"
+  },
+  "author": "appquality <it@app-quality.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AppQuality/craft-blocks/issues"
+  },
+  "homepage": "https://github.com/AppQuality/craft-blocks#readme"
 }
