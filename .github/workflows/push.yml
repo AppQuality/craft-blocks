@@ -24,6 +24,8 @@ jobs:
           restore-keys: |
             npm-deps-${{ hashFiles('package-lock.json') }}
       - name: Create Release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm ci
           npm run build
