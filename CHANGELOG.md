@@ -1,3 +1,28 @@
+# v0.1.18 (Thu May 12 2022)
+
+#### ⚠️ Pushed to `main`
+
+- fix(github action): test automation NPM token ([@iacopolea](https://github.com/iacopolea))
+- fix(github action): do not use yarn ([@iacopolea](https://github.com/iacopolea))
+- fix(github action): ignore yarn lock file ([@iacopolea](https://github.com/iacopolea))
+- feat(github action): ignore dist files ([@iacopolea](https://github.com/iacopolea))
+- feat(github action): add meta data to package json ([@iacopolea](https://github.com/iacopolea))
+- feat(github action): add github token ([@iacopolea](https://github.com/iacopolea))
+- feat(github action): add npmrc ([@iacopolea](https://github.com/iacopolea))
+- feat(Text): add text align ([@iacopolea](https://github.com/iacopolea))
+- fix(github action): use npm token from secrets ([@iacopolea](https://github.com/iacopolea))
+- fix(github action): update action node version ([@iacopolea](https://github.com/iacopolea))
+- package json ([@iacopolea](https://github.com/iacopolea))
+- downgrade node version and cancel package json ([@iacopolea](https://github.com/iacopolea))
+- update node version ([@iacopolea](https://github.com/iacopolea))
+- feature github action release on push on main branch ([@iacopolea](https://github.com/iacopolea))
+
+#### Authors: 1
+
+- Iacopo Leardini ([@iacopolea](https://github.com/iacopolea))
+
+---
+
 # v0.1.17 (Mon Dec 06 2021)
 
 #### ⚠️ Pushed to `main`
