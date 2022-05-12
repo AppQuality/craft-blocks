@@ -58,10 +58,12 @@ const TextSettings = () => {
   const {
     actions: { setProp },
     fontSize,
+    textAlign,
     props
   } = useNode(node => ({
     text: node.data.props.text,
-    fontSize: node.data.props.fontSize
+    fontSize: node.data.props.fontSize,
+    textAlign: node.data.props.textAlign
   }));
 
   return (
@@ -76,6 +78,15 @@ const TextSettings = () => {
           min={1}
           max={50}
           onChange={e => setProp(props => (props.fontSize = e.target.value))}
+        />
+      </BSCol>
+      <BSCol size="col-12">
+        <FormLabel htmlFor="textAlign" label="Text Align" />
+        <input
+          id="textAlign"
+          type="string"
+          defaultValue={textAlign || 'left'}
+          onChange={e => setProp(props => (props.textAlign = e.target.value))}
         />
       </BSCol>
       <BSCol size="col-12">
