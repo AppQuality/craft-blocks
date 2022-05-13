@@ -8,6 +8,7 @@ import {
   BSCol,
   FormLabel
 } from "@appquality/appquality-design-system";
+import {useNode} from "@craftjs/core";
 interface MarginProps {
   allSides?: boolean;
   allSidesMargin?: number;
@@ -19,10 +20,6 @@ interface MarginProps {
 interface SideMarginSettingsProps {
   value: number;
   set: (e: number) => void;
-}
-interface MarginSettingsProps {
-  setProp: (v: any) => void;
-  props: MarginProps;
 }
 
 const SideMarginSettings = ({ value, set }: SideMarginSettingsProps) => {
@@ -89,7 +86,13 @@ export const useMargins = ({allSidesMargin, allSides, topMargin, leftMargin, rig
   return "";
 };
 
-export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
+export const MarginSettings = () => {
+  const {
+    actions: { setProp },
+    props
+  } = useNode<{ props: Record<keyof MarginProps, any>; }>(node => ({
+    props: node.data.props
+  }));
   const [allSides, setAllSides] = useState(props.allSides);
   useEffect(() => {
     setAllSides(props.allSides);
@@ -102,7 +105,12 @@ export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
         <input
           type="checkbox"
           defaultChecked={allSides}
-          onChange={() => setProp((props: MarginProps) => (props.allSides = !props.allSides))}
+          onChange={() => setProp((props: MarginProps) => {
+            Object.keys(props).forEach(key => {
+              console.log(key);
+            });
+            return(props.allSides = !props.allSides)
+          })}
         />
       </Text>
 
