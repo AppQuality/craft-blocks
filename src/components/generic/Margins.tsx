@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 
 import {
@@ -8,8 +9,24 @@ import {
   BSCol,
   FormLabel
 } from "@appquality/appquality-design-system";
+interface MarginProps {
+  allSides?: boolean;
+  allSidesMargin?: string;
+  topMargin?: string;
+  bottomMargin?: string;
+  leftMargin?: string;
+  rightMargin?: string;
+}
+interface SideMarginSettingsProps {
+  value: number;
+  set: (e: number) => void;
+}
+interface MarginSettingsProps {
+  setProp: (prop: MarginProps) => void;
+  props: MarginProps;
+}
 
-const SideMarginSettings = ({ value, set }) => {
+const SideMarginSettings = ({ value, set }: SideMarginSettingsProps) => {
   return value <= 0 ? (
     <Button size="sm" flat={true} onClick={e => set(1)}>
       Set margin
@@ -27,42 +44,53 @@ const SideMarginSettings = ({ value, set }) => {
   );
 };
 
-export const useMargins = props => {
-  if (props.allSides) {
-    if (parseInt(props.allSidesMargin) > 0)
-      return `aq-m-${props.allSidesMargin}`;
+
+export const useMargins = ({allSidesMargin, allSides, topMargin, leftMargin, rightMargin, bottomMargin}: MarginProps) => {
+  function hasAllSidesMargin() {
+    return allSides;
+  }
+  function isPositive(aNumeric?: string) {
+    return aNumeric && parseInt(aNumeric) > 0;
+  }
+  function getAllSidesMargin() {
+    if (isPositive(allSidesMargin)) {
+      return  `aq-m-${allSidesMargin}`;
+    }
     return "";
   }
+  function hasAtLeastOneMargin() {
+    return isPositive(topMargin) ||
+      isPositive(bottomMargin) ||
+      isPositive(leftMargin) ||
+      isPositive(rightMargin);
+  }
+  function getAtLeastOneMargin() {
+    let result = "";
+    if (isPositive(topMargin)) {
+      result += ` aq-mt-${topMargin}`;
+    }
+    if (isPositive(bottomMargin)) {
+      result += ` aq-mb-${bottomMargin}`;
+    }
+    if (isPositive(leftMargin)) {
+      result += ` aq-ml-${leftMargin}`;
+    }
+    if (isPositive(rightMargin)) {
+      result += ` aq-mr-${rightMargin}`;
+    }
+    return result;
+  }
 
-  if (
-    parseInt(props.topMargin) > 0 ||
-    parseInt(props.bottomMargin) > 0 ||
-    parseInt(props.leftMargin) > 0 ||
-    parseInt(props.rightMargin) > 0
-  ) {
-    let className = "";
-    if (props.topMargin === props.bottomMargin) {
-      className += ` aq-my-${props.topMargin}`;
-    } else {
-      if (parseInt(props.topMargin) > 0)
-        className += ` aq-mt-${props.topMargin}`;
-      if (parseInt(props.bottomMargin) > 0)
-        className += ` aq-mb-${props.bottomMargin}`;
-    }
-    if (props.leftMargin === props.rightMargin) {
-      className += ` aq-mx-${props.leftMargin}`;
-    } else {
-      if (parseInt(props.leftMargin) > 0)
-        className += ` aq-ml-${props.leftMargin}`;
-      if (parseInt(props.rightMargin) > 0)
-        className += ` aq-mr-${props.rightMargin}`;
-    }
-    return className;
+  if (hasAllSidesMargin()) {
+    return getAllSidesMargin();
+  }
+  if (hasAtLeastOneMargin()) {
+    return getAtLeastOneMargin();
   }
   return "";
 };
 
-export const MarginSettings = ({ setProp, props }) => {
+export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
   const allSides = typeof props.allSides == "undefined" ? true : props.allSides;
   return (
     <div className="aq-mb-3" style={{ float: "left", width: "100%" }}>

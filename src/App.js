@@ -15,6 +15,7 @@ import {
   Container,
   Text,
 } from './components';
+import {SettingsPanel} from "./components/generic/SettingsPanel";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
       <GlobalStyle />
       <div className="App">
         <Editor
-          enabled={false}
+          enabled
           resolver={{
             Button,
             Container,
@@ -33,7 +34,7 @@ function App() {
         >
           <div className="aq-mt-3">
             <BSGrid>
-              <BSCol>
+              <BSCol size='col-9'>
                 <div id="editor-area">
                   <Frame>
                     <Element
@@ -58,6 +59,8 @@ function App() {
                           link="https://google.com"
                           size="medium"
                           data-cy="frame-button"
+                          rightMargin='2'
+                          leftMargin='2'
                         />
                         <Button
                           color="success"
@@ -70,6 +73,9 @@ function App() {
                     </Element>
                   </Frame>
                 </div>
+              </BSCol>
+              <BSCol size='col-3'>
+                <SettingsPanel />
               </BSCol>
             </BSGrid>
           </div>
