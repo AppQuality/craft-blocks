@@ -1,5 +1,4 @@
-// @ts-nocheck
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import {
   Button,
@@ -11,24 +10,24 @@ import {
 } from "@appquality/appquality-design-system";
 interface MarginProps {
   allSides?: boolean;
-  allSidesMargin?: string;
-  topMargin?: string;
-  bottomMargin?: string;
-  leftMargin?: string;
-  rightMargin?: string;
+  allSidesMargin?: number;
+  topMargin?: number;
+  bottomMargin?: number;
+  leftMargin?: number;
+  rightMargin?: number;
 }
 interface SideMarginSettingsProps {
   value: number;
   set: (e: number) => void;
 }
 interface MarginSettingsProps {
-  setProp: (prop: MarginProps) => void;
+  setProp: (v: any) => void;
   props: MarginProps;
 }
 
 const SideMarginSettings = ({ value, set }: SideMarginSettingsProps) => {
   return value <= 0 ? (
-    <Button size="sm" flat={true} onClick={e => set(1)}>
+    <Button size="sm" flat={true} onClick={() => set(1)}>
       Set margin
     </Button>
   ) : (
@@ -38,7 +37,7 @@ const SideMarginSettings = ({ value, set }: SideMarginSettingsProps) => {
         min="-1"
         max="3"
         value={value}
-        onChange={e => e < 4 && set(e)}
+        onChange={(e:number) => e < 4 && set(e)}
       />
     </>
   );
@@ -49,8 +48,8 @@ export const useMargins = ({allSidesMargin, allSides, topMargin, leftMargin, rig
   function hasAllSidesMargin() {
     return allSides;
   }
-  function isPositive(aNumeric?: string) {
-    return aNumeric && parseInt(aNumeric) > 0;
+  function isPositive(aNumeric?: number) {
+    return aNumeric && aNumeric > 0;
   }
   function getAllSidesMargin() {
     if (isPositive(allSidesMargin)) {
@@ -91,7 +90,10 @@ export const useMargins = ({allSidesMargin, allSides, topMargin, leftMargin, rig
 };
 
 export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
-  const allSides = typeof props.allSides == "undefined" ? true : props.allSides;
+  const [allSides, setAllSides] = useState(props.allSides);
+  useEffect(() => {
+    setAllSides(props.allSides);
+  }, [props.allSides]);
   return (
     <div className="aq-mb-3" style={{ float: "left", width: "100%" }}>
       <FormLabel htmlfor="input-margin" label="Margin" />
@@ -100,14 +102,14 @@ export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
         <input
           type="checkbox"
           defaultChecked={allSides}
-          onChange={e => setProp(props => (props.allSides = !props.allSides))}
+          onChange={() => setProp((props: MarginProps) => (props.allSides = !props.allSides))}
         />
       </Text>
 
       {allSides ? (
         <SideMarginSettings
           value={props.allSidesMargin || -1}
-          set={e => setProp(props => (props.allSidesMargin = e))}
+          set={e => setProp((props: MarginProps) => (props.allSidesMargin = e))}
         />
       ) : (
         <BSGrid>
@@ -116,7 +118,7 @@ export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
               <Text>Top</Text>
               <SideMarginSettings
                 value={props.topMargin || -1}
-                set={e => setProp(props => (props.topMargin = e))}
+                set={e => setProp((props: MarginProps) => (props.topMargin = e))}
               />
             </Text>
           </BSCol>
@@ -125,7 +127,7 @@ export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
               <Text>Left</Text>
               <SideMarginSettings
                 value={props.leftMargin || -1}
-                set={e => setProp(props => (props.leftMargin = e))}
+                set={e => setProp((props: MarginProps) => (props.leftMargin = e))}
               />
             </Text>
           </BSCol>
@@ -135,7 +137,7 @@ export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
 
               <SideMarginSettings
                 value={props.bottomMargin || -1}
-                set={e => setProp(props => (props.bottomMargin = e))}
+                set={e => setProp((props: MarginProps) => (props.bottomMargin = e))}
               />
             </Text>
           </BSCol>
@@ -145,7 +147,7 @@ export const MarginSettings = ({ setProp, props }: MarginSettingsProps) => {
 
               <SideMarginSettings
                 value={props.rightMargin || -1}
-                set={e => setProp(props => (props.rightMargin = e))}
+                set={e => setProp((props: MarginProps) => (props.rightMargin = e))}
               />
             </Text>
           </BSCol>
