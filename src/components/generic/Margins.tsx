@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-
+import {useNode} from "@craftjs/core";
 import {
   Button,
   Text,
@@ -8,15 +8,7 @@ import {
   BSCol,
   FormLabel
 } from "@appquality/appquality-design-system";
-import {useNode} from "@craftjs/core";
-interface MarginProps {
-  allSides?: boolean;
-  allSidesMargin?: number;
-  topMargin?: number;
-  bottomMargin?: number;
-  leftMargin?: number;
-  rightMargin?: number;
-}
+
 interface SideMarginSettingsProps {
   value: number;
   set: (e: number) => void;

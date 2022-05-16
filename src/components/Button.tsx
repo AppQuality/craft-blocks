@@ -10,7 +10,16 @@ import {
 import React from "react";
 import { MarginSettings, useMargins } from "./generic/Margins";
 
-export const Button = ({ size, link, color, text, ...props }) => {
+interface ButtonProps extends MarginProps{
+  text: string;
+  type: string;
+  size: string;
+  link: string;
+  color: string;
+  onClick: () => void;
+}
+
+export const Button = ({ size, link, color, text, ...props }: ButtonProps) => {
   const {
     connectors: { connect, drag },
     isSelected
@@ -21,7 +30,7 @@ export const Button = ({ size, link, color, text, ...props }) => {
   if (isSelected) className = `${className} craftjs-node-selected`;
 
   return (
-    <span className={className} {...props} ref={ref => connect(drag(ref))}>
+    <span className={className} {...props} ref={ref => connect(drag(ref as HTMLElement))}>
       <AppqButton size={size} type={color} as="a" href={link} target="_blank">
         {text}
       </AppqButton>
@@ -57,14 +66,14 @@ export const ButtonSettings = () => {
       <BSCol size="col-12 aq-mb-3">
         <FormLabel htmlfor="input-text" label="Text" />
         <Input
-          onChange={e => setProp(props => (props.text = e))}
+          onChange={(e: any) => setProp((props: ButtonProps) => (props.text = e))}
           value={props.text}
         />
       </BSCol>
       <BSCol size="col-12 aq-mb-3">
         <FormLabel htmlfor="input-link" label="Link" />
         <Input
-          onChange={e => setProp(props => (props.link = e))}
+          onChange={(e: any) => setProp((props: ButtonProps) => (props.link = e))}
           value={props.link}
         />
       </BSCol>
@@ -73,8 +82,8 @@ export const ButtonSettings = () => {
           name="input-size"
           label="Size"
           options={sizeOptions}
-          value={currentSize}
-          onChange={e => setProp(props => (props.size = e.value))}
+          value={currentSize || {label: "", value: ""}}
+          onChange={e => setProp((props: ButtonProps) => (props.size = e.value || ""))}
         />
       </BSCol>
       <BSCol size="col-12 aq-mb-3">
@@ -82,12 +91,12 @@ export const ButtonSettings = () => {
           name="input-color"
           label="Color"
           options={colorOptions}
-          value={currentColor}
-          onChange={e => setProp(props => (props.color = e.value))}
+          value={currentColor|| {label: "", value: ""}}
+          onChange={e => setProp((props: ButtonProps) => (props.color = e.value || ""))}
         />
       </BSCol>
       <BSCol size="col-12 aq-mb-3">
-        <MarginSettings props={props} setProp={setProp} />
+        <MarginSettings />
       </BSCol>
     </BSGrid>
   );
