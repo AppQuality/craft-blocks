@@ -4,7 +4,14 @@ import React, { useState, useEffect } from "react";
 import ContentEditable from "react-contenteditable";
 import { MarginSettings, useMargins } from "./generic/Margins";
 
-export const Text = ({ text, fontSize, textAlign, ...props }) => {
+interface TextProps extends MarginProps {
+  text: string;
+  fontSize?: string;
+  textAlign: string;
+  className?: string;
+}
+
+export const Text = ({ text, fontSize, textAlign, ...props }: TextProps) => {
   const {
     connectors: { connect, drag },
     selected,
@@ -14,10 +21,8 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
     dragged: state.events.dragged
   }));
 
-  const marginClass = useMargins(props || {});
-  let className = props.className
-    ? `${props.className} ${marginClass}`
-    : marginClass;
+  let className = useMargins(props);
+  className += props.className ? ` ${props.className}` : "";
   if (selected) className = `${className} craftjs-node-selected`;
 
   const [editable, setEditable] = useState(false);
@@ -34,7 +39,7 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
     <div
       className={className}
       {...props}
-      ref={ref => connect(drag(ref))}
+      ref={ref => connect(drag(ref as HTMLElement))}
       onClick={() => selected && setEditable(true)}
     >
       <ContentEditable
@@ -42,7 +47,7 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
         disabled={!editable}
         onChange={e =>
           setProp(
-            props =>
+            (props:any) =>
               (props.text = e.target.value.replace(/<\/?[^>]+(>|$)/g, "")),
             500
           )
@@ -58,8 +63,7 @@ const TextSettings = () => {
   const {
     actions: { setProp },
     fontSize,
-    textAlign,
-    props
+    textAlign
   } = useNode(node => ({
     text: node.data.props.text,
     fontSize: node.data.props.fontSize,
@@ -77,7 +81,7 @@ const TextSettings = () => {
           step={7}
           min={1}
           max={50}
-          onChange={e => setProp(props => (props.fontSize = e.target.value))}
+          onChange={e => setProp((props: any) => (props.fontSize = e.target.value))}
         />
       </BSCol>
       <BSCol size="col-12">
@@ -86,11 +90,11 @@ const TextSettings = () => {
           id="textAlign"
           type="string"
           defaultValue={textAlign || 'left'}
-          onChange={e => setProp(props => (props.textAlign = e.target.value))}
+          onChange={(e) => setProp((props: TextProps) => (props.textAlign = e.target.value))}
         />
       </BSCol>
       <BSCol size="col-12">
-        <MarginSettings props={props || {}} setProp={setProp} />
+        <MarginSettings />
       </BSCol>
     </BSGrid>
   );
