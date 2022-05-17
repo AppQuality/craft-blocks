@@ -13,6 +13,7 @@ import {
   Button,
   ButtonContainer,
   Container,
+  Picture,
   Text,
 } from './components';
 import {SettingsPanel} from "./components/generic/SettingsPanel";
@@ -29,6 +30,7 @@ function App() {
             Container,
             Text,
             Wysiwyg,
+            Picture,
             ButtonContainer,
           }}
         >
@@ -48,6 +50,13 @@ function App() {
                           '{"blocks":[{"key":"3eeir","text":"Ciao Tester,","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"bdtka","text":"A partire dal 17 Maggio 2021 sarà necessario avere un profilo fiscale verificato per poter richiedere un pagamento sul proprio account AppQuality! 🤑","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":54,"length":26,"key":0}],"data":{}},{"key":"ekac1","text":"Per non subire interruzioni nelle tue attività ti invitiamo ad aggiornare le tue informazioni fiscali cliccando il bottone seguente ⬇️","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"aelur","text":"Grazie e Keep Testing!","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"51t06","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{"0":{"type":"LINK","mutability":"MUTABLE","data":{"href":"https://crowd.app-quality.com/it/guida-al-nuovo-profilo-fiscale/","rel":"noopener","target":"_blank","url":"https://crowd.app-quality.com/it/guida-al-nuovo-profilo-fiscale/"}}}}'
                         )}
                       />
+                      <Element
+                        canvas
+                        is='div'
+                        data-cy="picture-container"
+                      >
+                        <Picture title='puppies' src='https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg' />
+                      </Element>
                       <Element
                         canvas
                         is={ButtonContainer}
