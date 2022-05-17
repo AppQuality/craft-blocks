@@ -52,6 +52,7 @@ function App() {
                         canvas
                         is={ButtonContainer}
                         data-cy="button-container"
+                        positions='center'
                       >
                         <Button
                           color="success"
@@ -59,8 +60,8 @@ function App() {
                           link="https://google.com"
                           size="medium"
                           data-cy="frame-button"
-                          rightMargin='2'
-                          leftMargin='2'
+                          rightMargin={2}
+                          leftMargin={2}
                         />
                         <Button
                           color="success"

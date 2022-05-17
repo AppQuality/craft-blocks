@@ -12,11 +12,11 @@ import { MarginSettings, useMargins } from "./generic/Margins";
 
 interface ButtonProps extends MarginProps{
   text: string;
-  type: string;
+  type?: string;
   size: string;
   link: string;
   color: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const Button = ({ size, link, color, text, ...props }: ButtonProps) => {
