@@ -1,6 +1,7 @@
 import pkg from "./package.json";
 import babel from "@rollup/plugin-babel";
 import styles from "rollup-plugin-styles";
+import typescript from "rollup-plugin-typescript2";
 
 export default [
   {
@@ -18,7 +19,8 @@ export default [
       babel({ babelHelpers: "bundled" }),
       styles({
         modules: true
-      })
+      }),
+      typescript()
     ],
     external: ["react", "react-dom", "@appquality/appquality-design-system"]
   }
