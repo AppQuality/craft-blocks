@@ -1,3 +1,15 @@
+# v0.1.20 (Wed May 18 2022)
+
+#### ⚠️ Pushed to `main`
+
+- fix export picture settings ([@iacopolea](https://github.com/iacopolea))
+
+#### Authors: 1
+
+- Iacopo Leardini ([@iacopolea](https://github.com/iacopolea))
+
+---
+
 # v0.1.19 (Wed May 18 2022)
 
 #### ⚠️ Pushed to `main`
