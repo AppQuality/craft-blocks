@@ -13,8 +13,10 @@ import {
   Button,
   ButtonContainer,
   Container,
+  Picture,
   Text,
 } from './components';
+import {SettingsPanel} from "./components/generic/SettingsPanel";
 
 function App() {
   return (
@@ -22,18 +24,19 @@ function App() {
       <GlobalStyle />
       <div className="App">
         <Editor
-          enabled={false}
+          enabled
           resolver={{
             Button,
             Container,
             Text,
             Wysiwyg,
+            Picture,
             ButtonContainer,
           }}
         >
           <div className="aq-mt-3">
             <BSGrid>
-              <BSCol>
+              <BSCol size='col-9'>
                 <div id="editor-area">
                   <Frame>
                     <Element
@@ -49,8 +52,16 @@ function App() {
                       />
                       <Element
                         canvas
+                        is='div'
+                        data-cy="picture-container"
+                      >
+                        <Picture title='puppies' src='https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg' />
+                      </Element>
+                      <Element
+                        canvas
                         is={ButtonContainer}
                         data-cy="button-container"
+                        positions='center'
                       >
                         <Button
                           color="success"
@@ -58,6 +69,8 @@ function App() {
                           link="https://google.com"
                           size="medium"
                           data-cy="frame-button"
+                          rightMargin={2}
+                          leftMargin={2}
                         />
                         <Button
                           color="success"
@@ -70,6 +83,9 @@ function App() {
                     </Element>
                   </Frame>
                 </div>
+              </BSCol>
+              <BSCol size='col-3'>
+                <SettingsPanel />
               </BSCol>
             </BSGrid>
           </div>
