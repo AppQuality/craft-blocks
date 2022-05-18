@@ -1,3 +1,25 @@
+# v0.1.19 (Wed May 18 2022)
+
+#### ⚠️ Pushed to `main`
+
+- chore: rollup config and file extensions ([@iacopolea](https://github.com/iacopolea))
+- chore: add typescript to rollup config ([@iacopolea](https://github.com/iacopolea))
+- Merge branch 'CP-2036' ([@iacopolea](https://github.com/iacopolea))
+- chore: Picture component ([@iacopolea](https://github.com/iacopolea))
+- chore: tsc in Text component ([@iacopolea](https://github.com/iacopolea))
+- chore: tsc in Button component ([@iacopolea](https://github.com/iacopolea))
+- chore: @types repo and move dependencies ([@iacopolea](https://github.com/iacopolea))
+- chore: Button tsx ([@iacopolea](https://github.com/iacopolea))
+- chore: update des sys ([@iacopolea](https://github.com/iacopolea))
+- chore: margin component typescript refactor ([@iacopolea](https://github.com/iacopolea))
+- chore: init typescript refactor ([@iacopolea](https://github.com/iacopolea))
+
+#### Authors: 1
+
+- Iacopo Leardini ([@iacopolea](https://github.com/iacopolea))
+
+---
+
 # v0.1.18 (Thu May 12 2022)
 
 #### ⚠️ Pushed to `main`
