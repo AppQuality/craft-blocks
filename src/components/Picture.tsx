@@ -35,7 +35,7 @@ export const Picture = ({ src, title, width = PictureDefaultProps.width, height 
   );
 };
 
-const PictureSettings = () => {
+export const PictureSettings = () => {
   const {
     actions: { setProp },
     src,
