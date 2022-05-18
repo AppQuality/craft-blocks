@@ -48,7 +48,6 @@ export const WysiwygSettings = () => {
   } = useNode(node => ({
     props: node.data.props
   }));
-  const [showToolbar, setShowToolbar] = React.useState(false);
   const [editorState, setEditorState] = React.useState(() =>
     props.text
       ? DraftJsState.createWithContent(convertFromRaw(props.text))
@@ -72,8 +71,6 @@ export const WysiwygSettings = () => {
     <div>
       <div
         className={editorStyles.editor}
-        onFocus={() => setShowToolbar(true)}
-        onBlur={() => setShowToolbar(false)}
       >
         <DraftJs
           editorState={editorState}

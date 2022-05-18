@@ -2,6 +2,7 @@ import pkg from "./package.json";
 import babel from "@rollup/plugin-babel";
 import styles from "rollup-plugin-styles";
 import typescript from "rollup-plugin-typescript2";
+import commonjs from "@rollup/plugin-commonjs";
 
 export default [
   {
@@ -16,6 +17,7 @@ export default [
       }
     ],
     plugins: [
+      commonjs(),
       babel({ babelHelpers: "bundled" }),
       styles({
         modules: true

@@ -4,8 +4,7 @@ import { Container as AppqContainer } from '@appquality/appquality-design-system
 
 export const Container = ({ className, children, ...props }) => {
   const {
-    connectors: { connect, drag },
-    isSelected
+    connectors: { connect, drag }
   } = useNode(node => ({
     isSelected: node.events.selected
   }));
