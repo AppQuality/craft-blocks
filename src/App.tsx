@@ -1,22 +1,22 @@
-import React from 'react';
-import { Editor, Frame, Element } from '@craftjs/core';
 import {
-  BSGrid,
-  BSCol,
-  ThemeProvider,
   aqBootstrapTheme,
+  BSCol,
+  BSGrid,
   GlobalStyle,
-} from '@appquality/appquality-design-system';
-import './App.css';
+  ThemeProvider,
+} from "@appquality/appquality-design-system";
+import { Editor, Element, Frame } from "@craftjs/core";
+import React from "react";
+import "./App.css";
 import {
-  Wysiwyg,
   Button,
   ButtonContainer,
   Container,
   Picture,
   Text,
-} from './components';
-import {SettingsPanel} from "./components/generic/SettingsPanel";
+  Wysiwyg,
+} from "./components";
+import { SettingsPanel } from "./components/generic/SettingsPanel";
 
 function App() {
   return (
@@ -36,7 +36,7 @@ function App() {
         >
           <div className="aq-mt-3">
             <BSGrid>
-              <BSCol size='col-9'>
+              <BSCol size="col-9">
                 <div id="editor-area">
                   <Frame>
                     <Element
@@ -50,18 +50,16 @@ function App() {
                           '{"blocks":[{"key":"3eeir","text":"Ciao Tester,","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"bdtka","text":"A partire dal 17 Maggio 2021 sarà necessario avere un profilo fiscale verificato per poter richiedere un pagamento sul proprio account AppQuality! 🤑","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":54,"length":26,"key":0}],"data":{}},{"key":"ekac1","text":"Per non subire interruzioni nelle tue attività ti invitiamo ad aggiornare le tue informazioni fiscali cliccando il bottone seguente ⬇️","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"aelur","text":"Grazie e Keep Testing!","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"51t06","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{"0":{"type":"LINK","mutability":"MUTABLE","data":{"href":"https://crowd.app-quality.com/it/guida-al-nuovo-profilo-fiscale/","rel":"noopener","target":"_blank","url":"https://crowd.app-quality.com/it/guida-al-nuovo-profilo-fiscale/"}}}}'
                         )}
                       />
-                      <Element
-                        canvas
-                        is='div'
-                        data-cy="picture-container"
-                      >
-                        <Picture title='puppies' src='https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg' />
-                      </Element>
+                      <Picture
+                        title="puppies"
+                        width="10%"
+                        src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg"
+                      />
                       <Element
                         canvas
                         is={ButtonContainer}
                         data-cy="button-container"
-                        positions='center'
+                        positions="center"
                       >
                         <Button
                           color="success"
@@ -84,7 +82,7 @@ function App() {
                   </Frame>
                 </div>
               </BSCol>
-              <BSCol size='col-3'>
+              <BSCol size="col-3">
                 <SettingsPanel />
               </BSCol>
             </BSGrid>
