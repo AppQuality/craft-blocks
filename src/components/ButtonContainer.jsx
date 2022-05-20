@@ -1,9 +1,9 @@
+import { FormLabel } from '@appquality/appquality-design-system';
 import { useNode } from '@craftjs/core';
 import React from 'react';
 import { Button } from './Button';
-import { Picture } from './Picture';
-import { FormLabel } from '@appquality/appquality-design-system';
 import { MarginSettings, useMargins } from './generic/Margins';
+import { Picture } from './Picture';
 
 export const ButtonContainer = ({ children, positions, ...props }) => {
   const {
@@ -100,7 +100,7 @@ export const ButtonContainerSettings = () => {
 
 ButtonContainer.craft = {
   rules: {
-    canMoveIn: incomingNode => (incomingNode.data.type === Button || incomingNode.data.type === Picture),
+    canMoveIn: incomingNode => incomingNode.length && (incomingNode[0].data.type === Button || incomingNode[0].data.type === Picture),
   },
   related: {
     settings: ButtonContainerSettings,
