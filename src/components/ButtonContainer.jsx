@@ -1,6 +1,7 @@
 import { useNode } from '@craftjs/core';
 import React from 'react';
 import { Button } from './Button';
+import { Picture } from './Picture';
 import { FormLabel } from '@appquality/appquality-design-system';
 import { MarginSettings, useMargins } from './generic/Margins';
 
@@ -99,7 +100,7 @@ export const ButtonContainerSettings = () => {
 
 ButtonContainer.craft = {
   rules: {
-    canMoveIn: incomingNode => incomingNode.data.type === Button,
+    canMoveIn: incomingNode => (incomingNode.data.type === Button || incomingNode.data.type === Picture),
   },
   related: {
     settings: ButtonContainerSettings,
