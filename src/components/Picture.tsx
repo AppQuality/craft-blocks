@@ -40,14 +40,14 @@ export const Picture = ({
   if (selected) classNames += " craftjs-node-selected";
 
   return (
-    <span
-      style={{ display: "inline-block", width: width, height: height }}
+    <div
+      style={{ display: "block", width: "max-content" }}
       className={classNames}
       {...props}
-      ref={(ref) => connect(drag(ref as HTMLElement))}
+      ref={(ref) => connect(drag(ref as HTMLDivElement))}
     >
-      <img src={src} width="auto" height="auto" alt={title} />
-    </span>
+      <img src={src} width={width} height={height} alt={title} />
+    </div>
   );
 };
 
