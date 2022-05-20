@@ -1,9 +1,9 @@
-import { useNode } from "@craftjs/core";
+import {useNode, UserComponent} from "@craftjs/core";
 import React from "react";
 import {
   EditorState as DraftJsState,
   convertToRaw,
-  convertFromRaw
+  convertFromRaw, RawDraftContentState
 } from "draft-js";
 import "./Draft.css";
 import editorStyles from "./editorStyles.module.css";
@@ -14,7 +14,11 @@ import DraftJs from "@draft-js-plugins/editor";
 import createToolbarPlugin from "@draft-js-plugins/static-toolbar";
 import { MarginSettings, useMargins } from "../generic/Margins";
 
-export const Wysiwyg = ({ text, ...props }) => {
+interface WysiwygProps extends BasicElementProps, MarginProps {
+  text: RawDraftContentState;
+}
+
+export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
   const {
     connectors: { connect, drag },
     isSelected
@@ -35,7 +39,7 @@ export const Wysiwyg = ({ text, ...props }) => {
     : marginClass;
   if (isSelected) className = `${className} craftjs-node-selected`;
   return (
-    <div className={className} {...props} ref={ref => connect(drag(ref))}>
+    <div className={className} {...props} ref={ref => connect(drag(ref as HTMLDivElement))}>
       <DraftJs editorState={editorState} readOnly />
     </div>
   );
@@ -48,7 +52,7 @@ export const WysiwygSettings = () => {
   } = useNode(node => ({
     props: node.data.props
   }));
-  const [editorState, setEditorState] = React.useState(() =>
+  const [editorState, setEditorState] = React.useState<DraftJsState>(() =>
     props.text
       ? DraftJsState.createWithContent(convertFromRaw(props.text))
       : DraftJsState.createEmpty()
@@ -61,8 +65,8 @@ export const WysiwygSettings = () => {
     return [[staticToolbarPlugin], staticToolbarPlugin.Toolbar];
   }, []);
 
-  const updateEditor = data => {
-    setProp(props => (props.text = convertToRaw(data.getCurrentContent())));
+  const updateEditor = (data:DraftJsState) => {
+    setProp((props:WysiwygProps) => (props.text = convertToRaw(data.getCurrentContent())));
     console.log(JSON.stringify(convertToRaw(data.getCurrentContent())));
     setEditorState(data);
   };
@@ -80,7 +84,7 @@ export const WysiwygSettings = () => {
         <Toolbar />
       </div>
       <div>
-        <MarginSettings props={props} setProp={setProp} />
+        <MarginSettings />
       </div>
     </div>
   );
