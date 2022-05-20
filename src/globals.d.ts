@@ -8,4 +8,6 @@ interface MarginProps {
 }
 interface BasicElementProps {
   className?: string;
+  key?: string;
+  children?: React.ReactNode;
 }
