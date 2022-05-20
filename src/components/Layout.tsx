@@ -7,7 +7,7 @@ interface LayoutContainerProps extends BasicElementProps, MarginProps {
   positions: string;
 }
 
-export const LayoutContainer: UserComponent = ({ children, positions, ...props }: LayoutContainerProps) => {
+export const Layout: UserComponent = ({ children, positions, ...props }: LayoutContainerProps) => {
   const {
     connectors: { connect, drag },
     isSelected
@@ -97,7 +97,7 @@ export const LayoutContainerSettings = () => {
   );
 };
 
-LayoutContainer.craft = {
+Layout.craft = {
   rules: {
     canMoveIn: () => true,// accept all components
   },

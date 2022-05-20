@@ -10,7 +10,7 @@ import React from "react";
 import "./App.css";
 import {
   Button,
-  ButtonContainer,
+  Layout,
   Container,
   Picture,
   Text,
@@ -31,7 +31,7 @@ function App() {
             Text,
             Wysiwyg,
             Picture,
-            ButtonContainer,
+            Layout,
           }}
         >
           <div className="aq-mt-3">
@@ -57,7 +57,7 @@ function App() {
                       />
                       <Element
                         canvas
-                        is={ButtonContainer}
+                        is={Layout}
                         data-cy="button-container"
                         positions="center"
                       >
