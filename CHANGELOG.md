@@ -1,3 +1,15 @@
+# v0.1.24 (Mon May 23 2022)
+
+#### ⚠️ Pushed to `main`
+
+- feat(Picture): fix resizing for img ([@iacopolea](https://github.com/iacopolea))
+
+#### Authors: 1
+
+- Iacopo Leardini ([@iacopolea](https://github.com/iacopolea))
+
+---
+
 # v0.1.23 (Mon May 23 2022)
 
 #### ⚠️ Pushed to `main`
