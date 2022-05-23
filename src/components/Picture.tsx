@@ -46,7 +46,7 @@ export const Picture = ({
       {...props}
       ref={(ref) => connect(drag(ref as HTMLDivElement))}
     >
-      <img src={src} width="auto" height="auto" alt={title} />
+      <img src={src} width="100%" height='100%' alt={title} />
     </span>
   );
 };
