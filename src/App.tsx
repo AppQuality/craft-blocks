@@ -6,6 +6,7 @@ import {
   ThemeProvider,
 } from "@appquality/appquality-design-system";
 import { Editor, Element, Frame } from "@craftjs/core";
+import lz from "lzutf8";
 import React from "react";
 import "./App.css";
 import {
@@ -18,6 +19,11 @@ import {
   Wysiwyg,
 } from "./components";
 import { SettingsPanel } from "./components/generic/SettingsPanel";
+
+const backwardCompatibilityTest =
+  process.env.REACT_APP_TEST_BACKWARD_COMPATIBILITY === "1"
+    ? process.env.REACT_APP_BACKWARD_COMPATIBILITY_BASE64
+    : undefined;
 
 function App() {
   return (
@@ -40,7 +46,15 @@ function App() {
             <BSGrid>
               <BSCol size="col-9">
                 <div id="editor-area">
-                  <Frame>
+                  <Frame
+                    data={
+                      backwardCompatibilityTest
+                        ? lz.decompress(
+                            lz.decodeBase64(backwardCompatibilityTest)
+                          )
+                        : undefined
+                    }
+                  >
                     <Element
                       canvas
                       is={Container}
