@@ -1,8 +1,9 @@
-export * from "./Wysiwyg/index";
+export { Element, Frame, useEditor } from "@craftjs/core";
 export * from "./Button";
-export * from "./Layout";
 export * from "./Container";
-export * from "./Text";
+export { Editor } from "./Editor";
+export * from "./Layout";
+export { Layout as ButtonContainer } from "./Layout";
 export * from "./Picture";
-export {Editor} from "./Editor";
-export { Frame, Element, useEditor } from "@craftjs/core";
+export * from "./Text";
+export * from "./Wysiwyg/index";

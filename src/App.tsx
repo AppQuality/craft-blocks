@@ -10,8 +10,9 @@ import React from "react";
 import "./App.css";
 import {
   Button,
-  Layout,
+  ButtonContainer,
   Container,
+  Layout,
   Picture,
   Text,
   Wysiwyg,
@@ -31,6 +32,7 @@ function App() {
             Text,
             Wysiwyg,
             Picture,
+            ButtonContainer,
             Layout,
           }}
         >
