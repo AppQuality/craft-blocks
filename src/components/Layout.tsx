@@ -101,6 +101,7 @@ Layout.craft = {
   rules: {
     canMoveIn: () => true,// accept all components
   },
+  isCanvas: true,
   related: {
     settings: LayoutContainerSettings,
   },
