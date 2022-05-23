@@ -1,11 +1,13 @@
-import { useNode } from '@craftjs/core';
-import React from 'react';
-import { Button } from './Button';
-import { Picture } from './Picture';
 import { FormLabel } from '@appquality/appquality-design-system';
+import {useNode, UserComponent} from '@craftjs/core';
+import React from 'react';
 import { MarginSettings, useMargins } from './generic/Margins';
 
-export const ButtonContainer = ({ children, positions, ...props }) => {
+interface LayoutContainerProps extends BasicElementProps, MarginProps {
+  positions: string;
+}
+
+export const Layout: UserComponent = ({ children, positions, ...props }: LayoutContainerProps) => {
   const {
     connectors: { connect, drag },
     isSelected
@@ -15,24 +17,21 @@ export const ButtonContainer = ({ children, positions, ...props }) => {
   let className = useMargins(props);
   if (isSelected) className = `${className} craftjs-node-selected`;
 
-  const style = { display: 'flex' };
-  if (positions) {
-    style.justifyContent = positions;
-  }
+  const style = { display: 'flex', justifyContent: positions || 'flex-start' };
 
   return (
     <div
       className={className}
       style={style}
       {...props}
-      ref={ref => connect(drag(ref))}
+      ref={ref => connect(drag(ref as HTMLDivElement))}
     >
       {children}
     </div>
   );
 };
 
-export const ButtonContainerSettings = () => {
+export const LayoutContainerSettings = () => {
   const {
     actions: { setProp },
     props,
@@ -42,52 +41,52 @@ export const ButtonContainerSettings = () => {
   return (
     <div>
       <div style={{ float: 'left', width: '100%', marginBottom: '10px' }}>
-        <MarginSettings props={props} setProp={setProp} />
+        <MarginSettings />
       </div>
       <div style={{ float: 'left', width: '100%', marginBottom: '10px' }}>
         <FormLabel htmlFor="spacing-select" label="Spacing" />
         <select
           id="spacing-select"
-          onChange={e => setProp(props => (props.positions = e.target.value))}
+          onChange={e => setProp((props: LayoutContainerProps) => (props.positions = e.target.value))}
         >
           <option
-            selected={typeof props.positions === 'undefined' ? true : false}
+            selected={typeof props.positions === 'undefined'}
             value="none"
           >
             None
           </option>
           <option
-            selected={props.positions === 'center' ? true : false}
+            selected={props.positions === 'center'}
             value="center"
           >
             Center
           </option>
           <option
-            selected={props.positions === 'space-between' ? true : false}
+            selected={props.positions === 'space-between'}
             value="space-between"
           >
             Space Between
           </option>
           <option
-            selected={props.positions === 'space-around' ? true : false}
+            selected={props.positions === 'space-around'}
             value="space-around"
           >
             Space Around
           </option>
           <option
-            selected={props.positions === 'space-evenly' ? true : false}
+            selected={props.positions === 'space-evenly'}
             value="space-evenly"
           >
             Space Evenly
           </option>
           <option
-            selected={props.positions === 'flex-end' ? true : false}
+            selected={props.positions === 'flex-end'}
             value="flex-end"
           >
             Right
           </option>
           <option
-            selected={props.positions === 'flex-start' ? true : false}
+            selected={props.positions === 'flex-start'}
             value="flex-start"
           >
             Left
@@ -98,11 +97,11 @@ export const ButtonContainerSettings = () => {
   );
 };
 
-ButtonContainer.craft = {
+Layout.craft = {
   rules: {
-    canMoveIn: incomingNode => (incomingNode.data.type === Button || incomingNode.data.type === Picture),
+    canMoveIn: () => true,// accept all components
   },
   related: {
-    settings: ButtonContainerSettings,
+    settings: LayoutContainerSettings,
   },
 };

@@ -6,3 +6,8 @@ interface MarginProps {
   leftMargin?: number;
   rightMargin?: number;
 }
+interface BasicElementProps {
+  className?: string;
+  key?: string;
+  children?: React.ReactNode;
+}
