@@ -1,3 +1,16 @@
+# v0.1.22 (Mon May 23 2022)
+
+#### 🐛 Bug Fix
+
+- Cp 2036 [#1](https://github.com/AppQuality/craft-blocks/pull/1) ([@d-beezee](https://github.com/d-beezee) [@iacopolea](https://github.com/iacopolea))
+
+#### Authors: 2
+
+- [@d-beezee](https://github.com/d-beezee)
+- Iacopo Leardini ([@iacopolea](https://github.com/iacopolea))
+
+---
+
 # v0.1.21 (Fri May 20 2022)
 
 #### ⚠️ Pushed to `main`
