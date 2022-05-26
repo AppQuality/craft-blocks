@@ -67,7 +67,6 @@ export const WysiwygSettings = () => {
 
   const updateEditor = (data:DraftJsState) => {
     setProp((props:WysiwygProps) => (props.text = convertToRaw(data.getCurrentContent())));
-    console.log(JSON.stringify(convertToRaw(data.getCurrentContent())));
     setEditorState(data);
   };
 

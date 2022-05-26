@@ -5,4 +5,6 @@ export * from "./Layout";
 export { Layout as ButtonContainer } from "./Layout";
 export * from "./Picture";
 export * from "./Text";
+export * from "./DynamicEditor";
+export * from "./DynamicPreview";
 export * from "./Wysiwyg/index";

@@ -98,9 +98,6 @@ export const MarginSettings = () => {
           type="checkbox"
           defaultChecked={allSides}
           onChange={() => setProp((props: MarginProps) => {
-            Object.keys(props).forEach(key => {
-              console.log(key);
-            });
             return(props.allSides = !props.allSides)
           })}
         />
