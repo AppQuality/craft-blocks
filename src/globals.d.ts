@@ -11,3 +11,8 @@ interface BasicElementProps {
   key?: string;
   children?: React.ReactNode;
 }
+interface GenericApiResponse {
+  [key: string]: {
+    [key: string]: string;
+  };
+}

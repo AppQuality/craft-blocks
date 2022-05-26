@@ -1,5 +1,5 @@
-import {useNode, UserComponent} from "@craftjs/core";
-import React from "react";
+import {useEditor, useNode, UserComponent} from "@craftjs/core";
+import React, {useEffect, useState} from "react";
 import {
   EditorState as DraftJsState,
   convertToRaw,
@@ -19,19 +19,49 @@ interface WysiwygProps extends BasicElementProps, MarginProps {
 }
 
 export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
+  const [editorState, setEditorState] = useState(DraftJsState.createEmpty());
   const {
     connectors: { connect, drag },
     isSelected
   } = useNode(node => ({
     isSelected: node.events.selected
   }));
+  const { ...collected } = useEditor((EditorState) => {
+    if(EditorState.options.resolver.hasOwnProperty('ApiResolver')){
+      return {
+        isDynamic: true
+      };
+    }
+  });
+  const populate = (): Promise<GenericApiResponse> => {
+    return new Promise((resolve) => {
+      resolve({"Profile": {"name": "pippo", "surname": "Franco"}});
+    });
+  };
 
-  let editorState;
-  if (text) {
-    editorState = DraftJsState.createWithContent(convertFromRaw(text));
-  } else {
-    editorState = DraftJsState.createEmpty();
-  }
+  useEffect(() => {
+
+    const populateDynamicContent = async (text: RawDraftContentState) => {
+      let rawContent = {
+        entityMap: text.entityMap,
+        blocks: text.blocks.map((block) => {
+          return {...block};
+        })
+      }
+      const res = await populate();
+      rawContent.blocks.forEach((block, index) => {
+        if (block.text.includes('{{Profile')) {
+          rawContent.blocks[index].text = block.text.replace('{{Profile.name}}', res.Profile.name);
+        }
+      });
+      setEditorState(DraftJsState.createWithContent(convertFromRaw(rawContent)));
+    }
+    if (collected.isDynamic) {
+      populateDynamicContent(text);
+    } else {
+      setEditorState(DraftJsState.createWithContent(convertFromRaw(text)));
+    }
+  }, [text, collected.isDynamic]);
 
   const marginClass = useMargins(props);
   let className = props.className
