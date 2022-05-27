@@ -16,3 +16,8 @@ interface GenericApiResponse {
     [key: string]: string;
   };
 }
+interface ContextState {
+  profileResolver?: GenericResolver;
+}
+
+type GenericResolver = () => Promise<GenericApiResponse>;

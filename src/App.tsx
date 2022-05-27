@@ -5,18 +5,15 @@ import {
   GlobalStyle,
   ThemeProvider, Title,
 } from "@appquality/appquality-design-system";
-import {Editor, Element, Frame} from "@craftjs/core";
+import {Element, Frame} from "@craftjs/core";
 import React, {useState} from "react";
 import "./App.css";
 import {
   Button,
-  ButtonContainer,
   Container,
   Layout,
-  Picture,
-  Text,
   Wysiwyg,
-  DynamicEditor,
+  DynamicEditor, Editor,
 } from "./components";
 import {SettingsPanel} from "./components/generic/SettingsPanel";
 
@@ -30,15 +27,6 @@ function App() {
           onNodesChange={query => {
             const json = query.serialize();
             setData(json);
-          }}
-          resolver={{
-            Button,
-            Container,
-            Text,
-            Wysiwyg,
-            Picture,
-            ButtonContainer,
-            Layout,
           }}
         >
           <div className="aq-mt-3">
@@ -83,8 +71,12 @@ function App() {
         </Editor>
         <BSGrid>
           <BSCol size="col-9">
-            <Title>Preview</Title>
-            <DynamicEditor data={data} />
+            <DynamicEditor>
+              <div className="aq-m-3">
+                <Title>Preview</Title>
+                {data && <Frame data={data} />}
+              </div>
+            </DynamicEditor>
           </BSCol>
         </BSGrid>
       </div>

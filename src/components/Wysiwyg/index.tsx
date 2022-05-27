@@ -1,5 +1,5 @@
-import {useEditor, useNode, UserComponent} from "@craftjs/core";
-import React, {useEffect, useState} from "react";
+import {useNode, UserComponent} from "@craftjs/core";
+import React, {useContext, useEffect, useState} from "react";
 import {
   EditorState as DraftJsState,
   convertToRaw,
@@ -13,6 +13,7 @@ import toolbarStyles from "./toolbarStyles.module.css";
 import DraftJs from "@draft-js-plugins/editor";
 import createToolbarPlugin from "@draft-js-plugins/static-toolbar";
 import { MarginSettings, useMargins } from "../generic/Margins";
+import {EditorContext} from "src/components/Editor";
 
 interface WysiwygProps extends BasicElementProps, MarginProps {
   text: RawDraftContentState;
@@ -26,42 +27,30 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
   } = useNode(node => ({
     isSelected: node.events.selected
   }));
-  const { ...collected } = useEditor((EditorState) => {
-    if(EditorState.options.resolver.hasOwnProperty('ApiResolver')){
-      return {
-        isDynamic: true
-      };
+  const {profileResolver} = useContext(EditorContext);
+  const populateDynamicContent = async (text: RawDraftContentState, getProfileData: GenericResolver) => {
+    let rawContent = {
+      entityMap: text.entityMap,
+      blocks: text.blocks.map((block) => {
+        return {...block};
+      })
     }
-  });
-  const populate = (): Promise<GenericApiResponse> => {
-    return new Promise((resolve) => {
-      resolve({"Profile": {"name": "pippo", "surname": "Franco"}});
+    const res = await getProfileData();
+    rawContent.blocks.forEach((block, index) => {
+      if (block.text.includes('{{Profile.name}}')) {
+        rawContent.blocks[index].text = block.text.replace('{{Profile.name}}', res.Profile.name);
+      }
     });
-  };
+    setEditorState(DraftJsState.createWithContent(convertFromRaw(rawContent)));
+  }
 
   useEffect(() => {
-
-    const populateDynamicContent = async (text: RawDraftContentState) => {
-      let rawContent = {
-        entityMap: text.entityMap,
-        blocks: text.blocks.map((block) => {
-          return {...block};
-        })
-      }
-      const res = await populate();
-      rawContent.blocks.forEach((block, index) => {
-        if (block.text.includes('{{Profile')) {
-          rawContent.blocks[index].text = block.text.replace('{{Profile.name}}', res.Profile.name);
-        }
-      });
-      setEditorState(DraftJsState.createWithContent(convertFromRaw(rawContent)));
-    }
-    if (collected.isDynamic) {
-      populateDynamicContent(text);
+    if (profileResolver) {
+      populateDynamicContent(text, profileResolver);
     } else {
       setEditorState(DraftJsState.createWithContent(convertFromRaw(text)));
     }
-  }, [text, collected.isDynamic]);
+  }, [text, profileResolver]);
 
   const marginClass = useMargins(props);
   let className = props.className
