@@ -21,25 +21,9 @@ const enabledComponents = {
   Layout,
 };
 
-export const Editor: React.FC<Partial<Options>> = ({children, ...props}: BasicElementProps) => {
+export const Editor: React.FC<Partial<Options>> = ({children, context = {}, ...props}: EditorProps) => {
   return (
-    <EditorContext.Provider value={{}}>
-      <CraftEditor resolver={enabledComponents} {...props}>
-        {children}
-      </CraftEditor>
-    </EditorContext.Provider>
-  )
-}
-
-export const DynamicEditor: React.FC<Partial<Options>> = ({children, ...props}:BasicElementProps) => {
-  return (
-    <EditorContext.Provider value={{
-      profileResolver: () => {
-        return new Promise((resolve) => {
-          resolve({"Profile": {"name": "pippo", "surname": "Franco"}});
-        });
-      }
-    }}>
+    <EditorContext.Provider value={context}>
       <CraftEditor resolver={enabledComponents} {...props}>
         {children}
       </CraftEditor>

@@ -19,5 +19,8 @@ interface GenericApiResponse {
 interface ContextState {
   profileResolver?: GenericResolver;
 }
+interface EditorProps extends BasicElementProps {
+  context?: ContextState;
+}
 
 type GenericResolver = () => Promise<GenericApiResponse>;

@@ -13,7 +13,7 @@ import {
   Container,
   Layout,
   Wysiwyg,
-  DynamicEditor, Editor,
+  Editor,
 } from "./components";
 import {SettingsPanel} from "./components/generic/SettingsPanel";
 
@@ -71,12 +71,12 @@ function App() {
         </Editor>
         <BSGrid>
           <BSCol size="col-9">
-            <DynamicEditor>
+            <Editor>
               <div className="aq-m-3">
                 <Title>Preview</Title>
                 {data && <Frame data={data} />}
               </div>
-            </DynamicEditor>
+            </Editor>
           </BSCol>
         </BSGrid>
       </div>
