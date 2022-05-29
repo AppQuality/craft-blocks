@@ -14,6 +14,8 @@ import DraftJs from "@draft-js-plugins/editor";
 import createToolbarPlugin from "@draft-js-plugins/static-toolbar";
 import { MarginSettings, useMargins } from "../generic/Margins";
 import {EditorContext} from "src/components/Editor";
+import flatten from "utils/flatten";
+import populateDynamicContent from "utils/populateDynamicContent";
 
 interface WysiwygProps extends BasicElementProps, MarginProps {
   text: RawDraftContentState;
@@ -27,30 +29,27 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
   } = useNode(node => ({
     isSelected: node.events.selected
   }));
-  const {profileResolver} = useContext(EditorContext);
-  const populateDynamicContent = async (text: RawDraftContentState, getProfileData: GenericResolver) => {
-    let rawContent = {
-      entityMap: text.entityMap,
-      blocks: text.blocks.map((block) => {
-        return {...block};
-      })
-    }
-    const res = await getProfileData();
-    rawContent.blocks.forEach((block, index) => {
-      if (block.text.includes('{{Profile.name}}')) {
-        rawContent.blocks[index].text = block.text.replace('{{Profile.name}}', res.Profile.name);
-      }
-    });
-    setEditorState(DraftJsState.createWithContent(convertFromRaw(rawContent)));
-  }
+  const {profile} = useContext(EditorContext);
 
   useEffect(() => {
-    if (profileResolver) {
-      populateDynamicContent(text, profileResolver);
+    if (profile?.resolver && profile?.shape) {
+      let rawContent = {
+        entityMap: text.entityMap,
+        blocks: text.blocks.map((block) => {
+          return {...block};
+        })
+      }
+      profile.resolver().then(res => {
+        rawContent.blocks = rawContent.blocks.map((block) => {
+          block.text = populateDynamicContent(block.text, flatten(profile.shape), res);
+          return block;
+        });
+        setEditorState(DraftJsState.createWithContent(convertFromRaw(rawContent)));
+      });
     } else {
       setEditorState(DraftJsState.createWithContent(convertFromRaw(text)));
     }
-  }, [text, profileResolver]);
+  }, [text, profile]);
 
   const marginClass = useMargins(props);
   let className = props.className
@@ -65,6 +64,8 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
 };
 
 export const WysiwygSettings = () => {
+  const [availableContent, setAvailableContent] = useState<string[]>([]);
+  const {profile} = useContext(EditorContext);
   const {
     actions: { setProp },
     props
@@ -89,8 +90,20 @@ export const WysiwygSettings = () => {
     setEditorState(data);
   };
 
+  const shapeDynamicContent = async (shape: GenericApiResponse) => {
+    setAvailableContent(flatten(shape));
+  }
+
+  useEffect(() => {
+    if (profile?.shape) shapeDynamicContent(profile.shape);
+  }, [profile?.shape]);
   return (
     <div>
+      {availableContent.length > 0 && (
+      <div>
+        you can use {availableContent.map(string => (<span>&#123;&#123;{string}&#125;&#125; </span>))}to populate the text with the profile name
+      </div>
+      )}
       <div
         className={editorStyles.editor}
       >

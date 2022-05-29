@@ -12,12 +12,15 @@ interface BasicElementProps {
   children?: React.ReactNode;
 }
 interface GenericApiResponse {
-  [key: string]: {
-    [key: string]: string;
+  [key: string]: string | {
+    [key: string]: string | GenericApiResponse;
   };
 }
 interface ContextState {
-  profileResolver?: GenericResolver;
+  profile?:{
+    shape: GenericApiResponse;
+    resolver: GenericResolver;
+  };
 }
 interface EditorProps extends BasicElementProps {
   context?: ContextState;
