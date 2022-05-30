@@ -12,7 +12,6 @@ import { MarginSettings, useMargins } from "./generic/Margins";
 import {AvailableDynamicContent} from "src/components/generic/AvailableDynamicContent";
 import EditorContext from "src/components/EditorContext";
 import populateDynamicContent from "src/utils/populateDynamicContent";
-import flatten from "src/utils/flatten";
 
 interface ButtonProps extends MarginProps{
   text: string;
@@ -24,7 +23,8 @@ interface ButtonProps extends MarginProps{
 }
 
 export const Button = ({ size, link, color, text, ...props }: ButtonProps) => {
-  const [innerText, setInnerText] = React.useState(text);
+  const [buttonText, setButtonText] = React.useState(text);
+  const [buttonLink, setButtonLink] = React.useState(link);
   const {
     connectors: { connect, drag },
     isSelected
@@ -38,15 +38,23 @@ export const Button = ({ size, link, color, text, ...props }: ButtonProps) => {
   useEffect(() => {
     if (resolver && resolveDynamicContent) {
       resolver().then(res => {
-        setInnerText(populateDynamicContent(text, flatten(res), res));
+        setButtonText(populateDynamicContent(text, res));
       });
     }
   }, [text, resolver, resolveDynamicContent]);
 
+  useEffect(() => {
+    if (resolver && resolveDynamicContent) {
+      resolver().then(res => {
+        setButtonLink(populateDynamicContent(link, res));
+      });
+    }
+  }, [link, resolver, resolveDynamicContent]);
+
   return (
     <span className={className} {...props} ref={ref => connect(drag(ref as HTMLElement))}>
-      <AppqButton size={size} type={color} as="a" href={link} target="_blank">
-        {innerText}
+      <AppqButton size={size} type={color} as="a" href={buttonLink} target="_blank">
+        {buttonText}
       </AppqButton>
     </span>
   );

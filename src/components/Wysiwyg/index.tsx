@@ -14,7 +14,6 @@ import DraftJs from "@draft-js-plugins/editor";
 import createToolbarPlugin from "@draft-js-plugins/static-toolbar";
 import { MarginSettings, useMargins } from "../generic/Margins";
 import EditorContext from "src/components/EditorContext";
-import flatten from "src/utils/flatten";
 import populateDynamicContent from "src/utils/populateDynamicContent";
 import {AvailableDynamicContent} from "src/components/generic/AvailableDynamicContent";
 
@@ -42,7 +41,7 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
       }
       resolver().then(res => {
         rawContent.blocks = rawContent.blocks.map((block) => {
-          block.text = populateDynamicContent(block.text, flatten(res), res);
+          block.text = populateDynamicContent(block.text, res);
           return block;
         });
         setEditorState(DraftJsState.createWithContent(convertFromRaw(rawContent)));
