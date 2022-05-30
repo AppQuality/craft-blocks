@@ -13,9 +13,10 @@ import toolbarStyles from "./toolbarStyles.module.css";
 import DraftJs from "@draft-js-plugins/editor";
 import createToolbarPlugin from "@draft-js-plugins/static-toolbar";
 import { MarginSettings, useMargins } from "../generic/Margins";
-import {EditorContext} from "src/components/Editor";
-import flatten from "utils/flatten";
-import populateDynamicContent from "utils/populateDynamicContent";
+import EditorContext from "src/components/EditorContext";
+import flatten from "src/utils/flatten";
+import populateDynamicContent from "src/utils/populateDynamicContent";
+import {AvailableDynamicContent} from "src/components/generic/AvailableDynamicContent";
 
 interface WysiwygProps extends BasicElementProps, MarginProps {
   text: RawDraftContentState;
@@ -64,8 +65,6 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
 };
 
 export const WysiwygSettings = () => {
-  const [availableContent, setAvailableContent] = useState<string[]>([]);
-  const {resolver} = useContext(EditorContext);
   const {
     actions: { setProp },
     props
@@ -90,22 +89,9 @@ export const WysiwygSettings = () => {
     setEditorState(data);
   };
 
-  const shapeDynamicContent = async (shape: GenericApiResponse) => {
-    setAvailableContent(flatten(shape));
-  }
-
-  useEffect(() => {
-    if (resolver) {
-      resolver().then(result => shapeDynamicContent(result));
-    }
-  }, [resolver]);
   return (
     <div>
-      {availableContent.length > 0 && (
-      <div>
-        you can use {availableContent.map(string => (<span>&#123;&#123;{string}&#125;&#125; </span>))}to populate the text with the profile info
-      </div>
-      )}
+      <AvailableDynamicContent />
       <div
         className={editorStyles.editor}
       >

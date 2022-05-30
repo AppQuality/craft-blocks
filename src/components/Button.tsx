@@ -7,8 +7,12 @@ import {
   FormLabel,
   Input
 } from "@appquality/appquality-design-system";
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import { MarginSettings, useMargins } from "./generic/Margins";
+import {AvailableDynamicContent} from "src/components/generic/AvailableDynamicContent";
+import EditorContext from "src/components/EditorContext";
+import populateDynamicContent from "src/utils/populateDynamicContent";
+import flatten from "src/utils/flatten";
 
 interface ButtonProps extends MarginProps{
   text: string;
@@ -20,19 +24,29 @@ interface ButtonProps extends MarginProps{
 }
 
 export const Button = ({ size, link, color, text, ...props }: ButtonProps) => {
+  const [innerText, setInnerText] = React.useState(text);
   const {
     connectors: { connect, drag },
     isSelected
   } = useNode(node => ({
     isSelected: node.events.selected
   }));
+  const {resolver, resolveDynamicContent} = useContext(EditorContext);
   let className = useMargins(props);
   if (isSelected) className = `${className} craftjs-node-selected`;
+
+  useEffect(() => {
+    if (resolver && resolveDynamicContent) {
+      resolver().then(res => {
+        setInnerText(populateDynamicContent(text, flatten(res), res));
+      });
+    }
+  }, [text, resolver, resolveDynamicContent]);
 
   return (
     <span className={className} {...props} ref={ref => connect(drag(ref as HTMLElement))}>
       <AppqButton size={size} type={color} as="a" href={link} target="_blank">
-        {text}
+        {innerText}
       </AppqButton>
     </span>
   );
@@ -63,6 +77,9 @@ export const ButtonSettings = () => {
   const currentColor = colorOptions.find(o => o.value === props.color);
   return (
     <BSGrid>
+      <BSCol size="col-12 aq-mb-3">
+        <AvailableDynamicContent />
+      </BSCol>
       <BSCol size="col-12 aq-mb-3">
         <FormLabel htmlfor="input-text" label="Text" />
         <Input
