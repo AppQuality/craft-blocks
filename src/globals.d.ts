@@ -16,14 +16,17 @@ interface GenericApiResponse {
     [key: string]: string | GenericApiResponse;
   };
 }
+interface ProfileApiResponse extends GenericApiResponse{
+  Profile: {
+    name: string;
+    surname: string;
+  }
+}
+type GenericResolver = () => Promise<GenericApiResponse>;
 interface ContextState {
-  profile?:{
-    shape: GenericApiResponse;
-    resolver: GenericResolver;
-  };
+  resolveDynamicContent?: boolean;
+  resolver?: GenericResolver;
 }
 interface EditorProps extends BasicElementProps {
   context?: ContextState;
 }
-
-type GenericResolver = () => Promise<GenericApiResponse>;

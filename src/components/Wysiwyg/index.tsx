@@ -29,19 +29,19 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
   } = useNode(node => ({
     isSelected: node.events.selected
   }));
-  const {profile} = useContext(EditorContext);
+  const {resolver, resolveDynamicContent} = useContext(EditorContext);
 
   useEffect(() => {
-    if (profile?.resolver && profile?.shape) {
+    if (resolver && resolveDynamicContent) {
       let rawContent = {
         entityMap: text.entityMap,
         blocks: text.blocks.map((block) => {
           return {...block};
         })
       }
-      profile.resolver().then(res => {
+      resolver().then(res => {
         rawContent.blocks = rawContent.blocks.map((block) => {
-          block.text = populateDynamicContent(block.text, flatten(profile.shape), res);
+          block.text = populateDynamicContent(block.text, flatten(res), res);
           return block;
         });
         setEditorState(DraftJsState.createWithContent(convertFromRaw(rawContent)));
@@ -49,7 +49,7 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
     } else {
       setEditorState(DraftJsState.createWithContent(convertFromRaw(text)));
     }
-  }, [text, profile]);
+  }, [text, resolver, resolveDynamicContent]);
 
   const marginClass = useMargins(props);
   let className = props.className
@@ -65,7 +65,7 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
 
 export const WysiwygSettings = () => {
   const [availableContent, setAvailableContent] = useState<string[]>([]);
-  const {profile} = useContext(EditorContext);
+  const {resolver} = useContext(EditorContext);
   const {
     actions: { setProp },
     props
@@ -95,13 +95,15 @@ export const WysiwygSettings = () => {
   }
 
   useEffect(() => {
-    if (profile?.shape) shapeDynamicContent(profile.shape);
-  }, [profile?.shape]);
+    if (resolver) {
+      resolver().then(result => shapeDynamicContent(result));
+    }
+  }, [resolver]);
   return (
     <div>
       {availableContent.length > 0 && (
       <div>
-        you can use {availableContent.map(string => (<span>&#123;&#123;{string}&#125;&#125; </span>))}to populate the text with the profile name
+        you can use {availableContent.map(string => (<span>&#123;&#123;{string}&#125;&#125; </span>))}to populate the text with the profile info
       </div>
       )}
       <div
