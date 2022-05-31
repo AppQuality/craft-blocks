@@ -1,5 +1,5 @@
 import { FormLabel } from '@appquality/appquality-design-system';
-import {useNode, UserComponent} from '@craftjs/core';
+import {useNode, UserComponent} from '@appquality/craftjs-core';
 import React from 'react';
 import { MarginSettings, useMargins } from './generic/Margins';
 

@@ -1,4 +1,4 @@
-export { Element, Frame, useEditor } from "@craftjs/core";
+export { Element, Frame, useEditor } from "@appquality/craftjs-core";
 export * from "./Button";
 export * from "./Container";
 export * from "./Layout";

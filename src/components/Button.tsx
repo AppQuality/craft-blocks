@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useNode } from "@appquality/craftjs-core";
 import {
   Button as AppqButton,
   Select,

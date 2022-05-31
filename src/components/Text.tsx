@@ -1,4 +1,4 @@
-import { useNode } from "@craftjs/core";
+import { useNode } from "@appquality/craftjs-core";
 import { FormLabel, BSGrid, BSCol } from "@appquality/appquality-design-system";
 import React, { useState, useEffect } from "react";
 import ContentEditable from "react-contenteditable";
