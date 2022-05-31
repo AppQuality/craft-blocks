@@ -1,3 +1,25 @@
+# v0.1.25 (Tue May 31 2022)
+
+#### ⚠️ Pushed to `main`
+
+- chore: use our fork of craftjs ([@iacopolea](https://github.com/iacopolea))
+- feat(Button): dynamic link ([@iacopolea](https://github.com/iacopolea))
+- wip: component availableDynamicContent ([@iacopolea](https://github.com/iacopolea))
+- wip: optional resolver and delete shape ([@iacopolea](https://github.com/iacopolea))
+- wip add shape and traverse resolver object ([@iacopolea](https://github.com/iacopolea))
+- chore add tslib ([@iacopolea](https://github.com/iacopolea))
+- wip dynamic Editor accept context ([@iacopolea](https://github.com/iacopolea))
+- wip dynamic Editor: use context ([@iacopolea](https://github.com/iacopolea))
+- feat baseurl for absolute imports ([@iacopolea](https://github.com/iacopolea))
+- wip: pagebuilder with dynamic preview ([@iacopolea](https://github.com/iacopolea))
+- init pagebuilder and preview communicating with variables ([@iacopolea](https://github.com/iacopolea))
+
+#### Authors: 1
+
+- Iacopo Leardini ([@iacopolea](https://github.com/iacopolea))
+
+---
+
 # v0.1.24 (Mon May 23 2022)
 
 #### ⚠️ Pushed to `main`
