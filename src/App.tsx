@@ -71,7 +71,8 @@ function App() {
         </Editor>
         <BSGrid>
           <BSCol size="col-9">
-            <Editor>
+            <Editor
+              enabled={false}>
               <div className="aq-m-3">
                 <Title>Preview</Title>
                 {data && <Frame data={data} />}
