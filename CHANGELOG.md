@@ -1,3 +1,18 @@
+# v0.1.26 (Wed Jun 01 2022)
+
+#### ⚠️ Pushed to `main`
+
+- Merge branch 'CP-2062' ([@iacopolea](https://github.com/iacopolea))
+- fix: preview editor not enabled ([@iacopolea](https://github.com/iacopolea))
+- chore: update craftjs ([@iacopolea](https://github.com/iacopolea))
+- Revert "chore: use our fork of craftjs" ([@iacopolea](https://github.com/iacopolea))
+
+#### Authors: 1
+
+- Iacopo Leardini ([@iacopolea](https://github.com/iacopolea))
+
+---
+
 # v0.1.25 (Tue May 31 2022)
 
 #### ⚠️ Pushed to `main`
