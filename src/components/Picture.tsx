@@ -4,7 +4,7 @@ import {
   FormLabel,
   Input,
 } from "@appquality/appquality-design-system";
-import { useNode } from "@appquality/craftjs-core";
+import { useNode } from "@craftjs/core";
 import React from "react";
 import { MarginSettings, useMargins } from "./generic/Margins";
 

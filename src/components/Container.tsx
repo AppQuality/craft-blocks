@@ -1,4 +1,4 @@
-import { useNode } from '@appquality/craftjs-core';
+import { useNode } from '@craftjs/core';
 import React from 'react';
 import { Container as AppqContainer } from '@appquality/appquality-design-system';
 

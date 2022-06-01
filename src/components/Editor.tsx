@@ -1,4 +1,4 @@
-import {Editor as CraftEditor} from "@appquality/craftjs-core";
+import {Editor as CraftEditor} from "@craftjs/core";
 import React from "react";
 import {Button} from "src/components/Button";
 import {Container} from "src/components/Container";
@@ -7,7 +7,7 @@ import {Wysiwyg} from "src/components/Wysiwyg";
 import {Picture} from "src/components/Picture";
 import {ButtonContainer} from "src/components";
 import {Layout} from "src/components/Layout";
-import {Options} from "@appquality/craftjs-core/lib/interfaces";
+import {Options} from "@craftjs/core/lib/interfaces";
 import EditorContext from "src/components/EditorContext";
 const enabledComponents = {
   Button,

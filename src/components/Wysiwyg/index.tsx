@@ -1,4 +1,4 @@
-import {useNode, UserComponent} from "@appquality/craftjs-core";
+import {useNode, UserComponent} from "@craftjs/core";
 import React, {useContext, useEffect, useState} from "react";
 import {
   EditorState as DraftJsState,
