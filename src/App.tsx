@@ -5,7 +5,7 @@ import {
   GlobalStyle,
   ThemeProvider, Title,
 } from "@appquality/appquality-design-system";
-import {Element, Frame} from "@appquality/craftjs-core";
+import {Element, Frame} from "@craftjs/core";
 import React, {useState} from "react";
 import "./App.css";
 import {
@@ -71,7 +71,8 @@ function App() {
         </Editor>
         <BSGrid>
           <BSCol size="col-9">
-            <Editor enabled={false}>
+            <Editor
+              enabled={false}>
               <div className="aq-m-3">
                 <Title>Preview</Title>
                 {data && <Frame data={data} />}
