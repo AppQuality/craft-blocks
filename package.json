@@ -7,6 +7,7 @@
     "@draft-js-plugins/editor": "^4.1.0",
     "@draft-js-plugins/static-toolbar": "^4.1.1",
     "draft-js": "^0.11.7",
+    "draftjs-utils": "^0.10.2",
     "react-contenteditable": "^3.3.5"
   },
   "scripts": {
