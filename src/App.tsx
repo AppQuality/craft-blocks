@@ -13,8 +13,9 @@ import {
   Container,
   Layout,
   Wysiwyg,
-  Editor,
+  Editor
 } from "./components";
+import {DynamicPreview} from "./DynamicPreview";
 import {SettingsPanel} from "./components/generic/SettingsPanel";
 
 function App() {
@@ -27,6 +28,20 @@ function App() {
           onNodesChange={query => {
             const json = query.serialize();
             setData(json);
+          }}
+          context={{
+            resolveDynamicContent: false,
+            resolver: () => {
+              return new Promise((resolve) => {
+                resolve({
+                  Profile: {
+                    id: "1987",
+                    name: "Pippo",
+                    surname: "Franco",
+                  },
+                });
+              });
+            },
           }}
         >
           <div className="aq-mt-3">
@@ -71,13 +86,7 @@ function App() {
         </Editor>
         <BSGrid>
           <BSCol size="col-9">
-            <Editor
-              enabled={false}>
-              <div className="aq-m-3">
-                <Title>Preview</Title>
-                {data && <Frame data={data} />}
-              </div>
-            </Editor>
+            <DynamicPreview data={data} />
           </BSCol>
         </BSGrid>
       </div>

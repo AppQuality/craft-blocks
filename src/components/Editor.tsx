@@ -9,6 +9,7 @@ import {ButtonContainer} from "src/components";
 import {Layout} from "src/components/Layout";
 import {Options} from "@craftjs/core/lib/interfaces";
 import EditorContext from "src/components/EditorContext";
+import {Partial} from "rollup-plugin-typescript2/dist/partial";
 const enabledComponents = {
   Button,
   Container,
@@ -19,10 +20,10 @@ const enabledComponents = {
   Layout,
 };
 
-export const Editor: React.FC<Partial<Options>> = ({children, context = {}, ...props}: EditorProps) => {
+export const Editor: React.FC<Partial<Options & EditorProps>> = ({children, context = {}, ...props}) => {
   return (
     <EditorContext.Provider value={context}>
-      <CraftEditor resolver={enabledComponents} {...props}>
+      <CraftEditor {...props} resolver={enabledComponents}>
         {children}
       </CraftEditor>
     </EditorContext.Provider>

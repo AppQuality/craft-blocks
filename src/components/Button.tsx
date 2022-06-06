@@ -86,7 +86,7 @@ export const ButtonSettings = () => {
   return (
     <BSGrid>
       <BSCol size="col-12 aq-mb-3">
-        <AvailableDynamicContent />
+
       </BSCol>
       <BSCol size="col-12 aq-mb-3">
         <FormLabel htmlfor="input-text" label="Text" />

@@ -1,9 +1,10 @@
 import {useNode, UserComponent} from "@craftjs/core";
-import React, {useContext, useEffect, useState} from "react";
-import {
+import React, {ReactNode, useContext, useEffect, useState} from "react";
+import Draft, {
   EditorState as DraftJsState,
   convertToRaw,
-  convertFromRaw, RawDraftContentState
+  CompositeDecorator,
+  convertFromRaw, RawDraftContentState, ContentState
 } from "draft-js";
 import "./Draft.css";
 import editorStyles from "./editorStyles.module.css";
@@ -33,6 +34,7 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
 
   useEffect(() => {
     if (resolver && resolveDynamicContent) {
+      console.log(text.entityMap);
       let rawContent = {
         entityMap: text.entityMap,
         blocks: text.blocks.map((block) => {
@@ -70,10 +72,37 @@ export const WysiwygSettings = () => {
   } = useNode(node => ({
     props: node.data.props
   }));
+  const decorator = new CompositeDecorator([
+    {
+      strategy: (contentBlock, callback, contentState) => {
+        contentBlock.findEntityRanges(
+          (character) => {
+            const entityKey = character.getEntity();
+            return (
+              entityKey !== null &&
+              contentState.getEntity(entityKey).getType() === 'VARIABLE'
+            );
+          },
+          callback
+        );
+      },
+      component: (props: any) => {
+        const {content} = props.contentState.getEntity(props.entityKey).getData();
+        return (
+          <a href={content} style={{
+            color: '#3b5998',
+            textDecoration: 'underline',
+          }}>
+            {props.children}
+          </a>
+        );
+      },
+    },
+  ]);
   const [editorState, setEditorState] = React.useState<DraftJsState>(() =>
     props.text
-      ? DraftJsState.createWithContent(convertFromRaw(props.text))
-      : DraftJsState.createEmpty()
+      ? DraftJsState.createWithContent(convertFromRaw(props.text), decorator)
+      : DraftJsState.createEmpty(decorator)
   );
 
   const [plugins, Toolbar] = React.useMemo(() => {
@@ -88,9 +117,22 @@ export const WysiwygSettings = () => {
     setEditorState(data);
   };
 
+  const VariableComponent = (props:any) => {
+    return (
+      <span>asssssuca</span>
+    )
+  }
+  const blockRendererFunction = (block:any) => {
+    if (block.getType() === 'atomic') {
+      return {
+        component: VariableComponent,
+        editable: false,
+      };
+    }
+  }
   return (
     <div>
-      <AvailableDynamicContent />
+      <AvailableDynamicContent editorState={editorState} setEditorState={setEditorState} />
       <div
         className={editorStyles.editor}
       >
@@ -98,6 +140,7 @@ export const WysiwygSettings = () => {
           editorState={editorState}
           onChange={updateEditor}
           plugins={plugins}
+          blockRendererFn={blockRendererFunction}
         />
         <Toolbar />
       </div>
