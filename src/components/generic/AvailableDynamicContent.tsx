@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import EditorContext from "src/components/EditorContext";
 import flatten from "src/utils/flatten";
-import {getEntityRange, getSelectionEntity} from "draftjs-utils";
-import Draft, {EditorState, RichUtils, Modifier, SelectionState, CompositeDecorator, DraftDecoratorType} from "draft-js";
+import {EditorState, Modifier} from "draft-js";
 
 export const AvailableDynamicContent = ({editorState, setEditorState}: {editorState: any, setEditorState: any}) => {
   const [availableContent, setAvailableContent] = useState<string[]>([]);

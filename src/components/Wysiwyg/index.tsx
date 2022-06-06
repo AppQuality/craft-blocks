@@ -1,10 +1,10 @@
 import {useNode, UserComponent} from "@craftjs/core";
-import React, {ReactNode, useContext, useEffect, useState} from "react";
-import Draft, {
+import React, {useContext, useEffect, useState} from "react";
+import {
   EditorState as DraftJsState,
   convertToRaw,
   CompositeDecorator,
-  convertFromRaw, RawDraftContentState, DraftDecorator, ContentState, Modifier, EditorState, ContentBlock
+  convertFromRaw, RawDraftContentState, DraftDecorator, SelectionState, Modifier, EditorState, ContentBlock
 } from "draft-js";
 import "./Draft.css";
 import editorStyles from "./editorStyles.module.css";
@@ -15,15 +15,50 @@ import DraftJs from "@draft-js-plugins/editor";
 import createToolbarPlugin from "@draft-js-plugins/static-toolbar";
 import { MarginSettings, useMargins } from "../generic/Margins";
 import EditorContext from "src/components/EditorContext";
-import populateDynamicContent from "src/utils/populateDynamicContent";
+import {getTerm} from "src/utils/populateDynamicContent";
 import {AvailableDynamicContent} from "src/components/generic/AvailableDynamicContent";
 
 interface WysiwygProps extends BasicElementProps, MarginProps {
   text: RawDraftContentState;
 }
 
+const generateDecorator = (highlightTerm: string) => {
+  const regex = new RegExp(highlightTerm, 'g');
+  return {
+    strategy: (contentBlock: ContentBlock, callback: (start: number, end: number) => void) => {
+      if (highlightTerm !== '') {
+        findWithRegex(regex, contentBlock, callback);
+      }
+    },
+    component: (props:any) => (
+      <span style={{backgroundColor: 'yellow'}}>{props.children}</span>
+    ),
+  }
+};
+const findWithRegex = (regex:RegExp, contentBlock: ContentBlock, callback: (start: number, end: number)=>void) => {
+  const text = contentBlock.getText();
+  let matchArr, start, end;
+  while ((matchArr = regex.exec(text)) !== null) {
+    start = matchArr.index;
+    end = start + matchArr[0].length;
+    callback(start, end);
+  }
+};
+
+const addDecorator = (data: DraftJsState, setEditorState: (data: DraftJsState) => void) => {
+  const currentContent = data.getCurrentContent();
+  let decorators: DraftDecorator[] = []
+  currentContent.getAllEntities().forEach((entity) => {
+    if (entity && entity.getType() === 'VARIABLE') {
+      const data = entity.getData();
+      decorators.push(generateDecorator(data.content));
+    }
+  });
+  setEditorState(EditorState.set(data, {decorator: new CompositeDecorator(decorators)}));
+}
+
 export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
-  const [editorState, setEditorState] = useState(DraftJsState.createEmpty());
+  const [editorState, setEditorState] = useState<DraftJsState>(() => text ? DraftJsState.createWithContent(convertFromRaw(text)) : DraftJsState.createEmpty());
   const {
     connectors: { connect, drag },
     isSelected
@@ -32,45 +67,54 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
   }));
   const {resolver, resolveDynamicContent} = useContext(EditorContext);
 
-  const generateDecorator = (highlightTerm: string) => {
-    const regex = new RegExp(highlightTerm, 'g');
-    return {
-      strategy: (contentBlock: ContentBlock, callback: (start: number, end: number) => void) => {
-        if (highlightTerm !== '') {
-          findWithRegex(regex, contentBlock, callback);
-        }
-      },
-      component: (props:any) => (
-        <span style={{backgroundColor: 'yellow'}}>{props.children}</span>
-      ),
-    }
-  };
-  const findWithRegex = (regex:RegExp, contentBlock: ContentBlock, callback: (start: number, end: number)=>void) => {
-    const text = contentBlock.getText();
-    let matchArr, start, end;
-    while ((matchArr = regex.exec(text)) !== null) {
-      start = matchArr.index;
-      end = start + matchArr[0].length;
-      callback(start, end);
-    }
-  };
+  // update contextual preview with editor changes
+  useEffect(() => {
+    const newState = DraftJsState.createWithContent(convertFromRaw(text));
+    addDecorator(newState, setEditorState);
+  }, [text]);
 
+  // replace variables with dynamic content
   useEffect(() => {
     if (resolver && resolveDynamicContent) {
-      const editorState = DraftJsState.createWithContent(convertFromRaw(text));
-      const currentContent = editorState.getCurrentContent();
-      let decorators: DraftDecorator[] = []
-      currentContent.getAllEntities().map((entity) => {
-        if (entity && entity.getType() === 'VARIABLE') {
-          const data = entity.getData();
-          decorators.push(generateDecorator(data.content));
-        }
+      resolver().then(result => {
+        console.log('resolve dynamic content');
+        const blockMap = editorState.getCurrentContent().getBlockMap();
+        const regex: RegExp[] = [];
+        editorState.getCurrentContent().getAllEntities().map((entity) => {
+          if (entity && entity.getType() === 'VARIABLE') {
+            const data = entity.getData();
+            if (data.content) {
+              regex.push(new RegExp(data.content, 'g'));
+            }
+          }
+        });
+
+        blockMap.forEach((contentBlock) => {
+          if (contentBlock) {
+            let contentState = editorState.getCurrentContent();
+            regex.forEach((regex) => {
+              findWithRegex(regex, contentBlock, (start, end) => {
+                const blockKey = contentBlock.getKey();
+                const blockSelection = SelectionState
+                  .createEmpty(blockKey)
+                  .merge({
+                    anchorOffset: start,
+                    focusOffset: end,
+                  });
+                console.log(getTerm(regex.source, result));
+                contentState = Modifier.replaceText(
+                  contentState,
+                  blockSelection,
+                  getTerm(regex.source, result),
+                )
+                setEditorState(EditorState.push(editorState, contentState, 'insert-characters'));
+              })
+            });
+          }
+        });
       });
-      setEditorState(EditorState.set(editorState, {decorator: new CompositeDecorator(decorators)}));
-    } else {
-      setEditorState(DraftJsState.createWithContent(convertFromRaw(text)));
     }
-  }, [text, resolver, resolveDynamicContent]);
+  } , [text, resolver, resolveDynamicContent]);
 
   const marginClass = useMargins(props);
   let className = props.className
@@ -79,7 +123,7 @@ export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
   if (isSelected) className = `${className} craftjs-node-selected`;
   return (
     <div className={className} {...props} ref={ref => connect(drag(ref as HTMLDivElement))}>
-      <DraftJs editorState={editorState} readOnly />
+      <DraftJs editorState={editorState} />
     </div>
   );
 };
@@ -91,38 +135,10 @@ export const WysiwygSettings = () => {
   } = useNode(node => ({
     props: node.data.props
   }));
-  const variableDecorator = new CompositeDecorator([
-    {
-      strategy: (contentBlock, callback, contentState) => {
-        contentBlock.findEntityRanges(
-          (character) => {
-            const entityKey = character.getEntity();
-            if (entityKey !== null && contentState.getEntity(entityKey).getType() === 'VARIABLE') {
-              console.log('variable found');
-            }
-            return (
-              entityKey !== null &&
-              contentState.getEntity(entityKey).getType() === 'VARIABLE'
-            );
-          },
-          callback
-        );
-      },
-      component: (props: any) => {
-        const {content} = (props.entityKey) ? props.contentState.getEntity(props.entityKey).getData() : 'suca';
-        console.log('variable component');
-        return (
-          <span data-content={content} >
-                        pippo
-                      </span>
-        );
-      },
-    }
-  ]);
-  const [editorState, setEditorState] = React.useState<DraftJsState>(() =>
+  const [editorState, setEditorState] = useState<DraftJsState>(() =>
     props.text
-      ? DraftJsState.createWithContent(convertFromRaw(props.text), variableDecorator)
-      : DraftJsState.createEmpty(variableDecorator)
+      ? DraftJsState.createWithContent(convertFromRaw(props.text))
+      : DraftJsState.createEmpty()
   );
 
   const [plugins, Toolbar] = React.useMemo(() => {
@@ -132,9 +148,10 @@ export const WysiwygSettings = () => {
     return [[staticToolbarPlugin], staticToolbarPlugin.Toolbar];
   }, []);
 
-  const updateEditor = (data:DraftJsState) => {
-    setProp((props:WysiwygProps) => (props.text = convertToRaw(data.getCurrentContent())));
-    setEditorState(data);
+  // update editor with contextual preview changes
+  const updateEditor = (newState:DraftJsState) => {
+    setProp((props:WysiwygProps) => (props.text = convertToRaw(newState.getCurrentContent())));
+    addDecorator(newState, setEditorState);
   };
 
   return (

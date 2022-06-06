@@ -1,12 +1,15 @@
 import flatten from "src/utils/flatten";
 
-const getTerm = (term: string, content: GenericApiResponse): string => {
+export const getTerm = (term: string, content: GenericApiResponse): string => {
+  term = term.replace('{{', '').replace('}}', '');
   const contentTerm = term.split('.').reduce<string | GenericApiResponse>((acc, curr) => {
     if (typeof acc === 'string') {
       return acc;
-    } else {
+    }
+    if (typeof acc !== "undefined") {
       return acc[curr];
     }
+    return "";
   }, content);
   return (typeof contentTerm === "string") ? contentTerm : "";
 }

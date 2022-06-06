@@ -1,5 +1,5 @@
 import {Frame, useEditor} from "@craftjs/core";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Editor} from "src/components";
 import {Title} from "@appquality/appquality-design-system";
 

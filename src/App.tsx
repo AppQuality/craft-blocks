@@ -3,7 +3,7 @@ import {
   BSCol,
   BSGrid,
   GlobalStyle,
-  ThemeProvider, Title,
+  ThemeProvider,
 } from "@appquality/appquality-design-system";
 import {Element, Frame} from "@craftjs/core";
 import React, {useState} from "react";
