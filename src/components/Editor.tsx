@@ -19,7 +19,7 @@ const enabledComponents = {
   Layout,
 };
 
-export const Editor: React.FC<Partial<Options>> = ({children, context = {}, ...props}: EditorProps) => {
+export const Editor: React.FC<Partial<Options & EditorProps>> = ({children, context = {}, ...props}) => {
   return (
     <EditorContext.Provider value={context}>
       <CraftEditor resolver={enabledComponents} {...props}>

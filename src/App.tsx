@@ -3,7 +3,7 @@ import {
   BSCol,
   BSGrid,
   GlobalStyle,
-  ThemeProvider, Title,
+  ThemeProvider,
 } from "@appquality/appquality-design-system";
 import {Element, Frame} from "@craftjs/core";
 import React, {useState} from "react";
@@ -16,6 +16,7 @@ import {
   Editor,
 } from "./components";
 import {SettingsPanel} from "./components/generic/SettingsPanel";
+import {DynamicPreview} from "src/DynamicPreview";
 
 function App() {
   const [data, setData] = useState<string>("");
@@ -24,6 +25,19 @@ function App() {
       <GlobalStyle />
       <div className="App">
         <Editor
+          context={{
+            resolver: () => {
+              return new Promise((resolve) => {
+                resolve({
+                  Profile: {
+                    id: "1987",
+                    name: "Pippo",
+                    surname: "Franco",
+                  },
+                });
+              });
+            },
+          }}
           onNodesChange={query => {
             const json = query.serialize();
             setData(json);
@@ -42,7 +56,7 @@ function App() {
                     >
                       <Wysiwyg
                         text={JSON.parse(
-                          '{"blocks":[{"key":"3eeir","text":"Ciao {{Profile.name}},","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"bdtka","text":"A partire dal 17 Maggio 2021 sarà necessario avere un profilo fiscale verificato per poter richiedere un pagamento sul proprio account AppQuality! 🤑","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":54,"length":26,"key":0}],"data":{}},{"key":"ekac1","text":"Per non subire interruzioni nelle tue attività ti invitiamo ad aggiornare le tue informazioni fiscali cliccando il bottone seguente ⬇️","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"aelur","text":"Grazie e Keep Testing!","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"51t06","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{"0":{"type":"LINK","mutability":"MUTABLE","data":{"href":"https://crowd.app-quality.com/it/guida-al-nuovo-profilo-fiscale/","rel":"noopener","target":"_blank","url":"https://crowd.app-quality.com/it/guida-al-nuovo-profilo-fiscale/"}}}}'
+                          '{"blocks":[{"key":"3eeir","text":"Ciao tryber,","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"bdtka","text":"A partire dal 17 Maggio 2021 sarà necessario avere un profilo fiscale verificato per poter richiedere un pagamento sul proprio account AppQuality! 🤑","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":54,"length":26,"key":0}],"data":{}},{"key":"ekac1","text":"Per non subire interruzioni nelle tue attività ti invitiamo ad aggiornare le tue informazioni fiscali cliccando il bottone seguente ⬇️","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"aelur","text":"Grazie e Keep Testing!","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"51t06","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{"0":{"type":"LINK","mutability":"MUTABLE","data":{"href":"https://crowd.app-quality.com/it/guida-al-nuovo-profilo-fiscale/","rel":"noopener","target":"_blank","url":"https://crowd.app-quality.com/it/guida-al-nuovo-profilo-fiscale/"}}}}'
                         )}
                       />
                       <Element
@@ -71,13 +85,7 @@ function App() {
         </Editor>
         <BSGrid>
           <BSCol size="col-9">
-            <Editor
-              enabled={false}>
-              <div className="aq-m-3">
-                <Title>Preview</Title>
-                {data && <Frame data={data} />}
-              </div>
-            </Editor>
+            <DynamicPreview data={data} />
           </BSCol>
         </BSGrid>
       </div>

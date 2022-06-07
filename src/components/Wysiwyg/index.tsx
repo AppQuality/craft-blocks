@@ -1,5 +1,5 @@
 import {useNode, UserComponent} from "@craftjs/core";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
   EditorState as DraftJsState,
   convertToRaw,
@@ -13,43 +13,23 @@ import toolbarStyles from "./toolbarStyles.module.css";
 import DraftJs from "@draft-js-plugins/editor";
 import createToolbarPlugin from "@draft-js-plugins/static-toolbar";
 import { MarginSettings, useMargins } from "../generic/Margins";
-import EditorContext from "src/components/EditorContext";
-import populateDynamicContent from "src/utils/populateDynamicContent";
-import {AvailableDynamicContent} from "src/components/generic/AvailableDynamicContent";
 
 interface WysiwygProps extends BasicElementProps, MarginProps {
   text: RawDraftContentState;
 }
 
 export const Wysiwyg: UserComponent<WysiwygProps> = ({ text, ...props }) => {
-  const [editorState, setEditorState] = useState(DraftJsState.createEmpty());
+  const [editorState, setEditorState] = useState(DraftJsState.createWithContent(convertFromRaw(text)));
   const {
     connectors: { connect, drag },
     isSelected
   } = useNode(node => ({
     isSelected: node.events.selected
   }));
-  const {resolver, resolveDynamicContent} = useContext(EditorContext);
 
   useEffect(() => {
-    if (resolver && resolveDynamicContent) {
-      let rawContent = {
-        entityMap: text.entityMap,
-        blocks: text.blocks.map((block) => {
-          return {...block};
-        })
-      }
-      resolver().then(res => {
-        rawContent.blocks = rawContent.blocks.map((block) => {
-          block.text = populateDynamicContent(block.text, res);
-          return block;
-        });
-        setEditorState(DraftJsState.createWithContent(convertFromRaw(rawContent)));
-      });
-    } else {
-      setEditorState(DraftJsState.createWithContent(convertFromRaw(text)));
-    }
-  }, [text, resolver, resolveDynamicContent]);
+    setEditorState(DraftJsState.createWithContent(convertFromRaw(text)));
+  }, [text]);
 
   const marginClass = useMargins(props);
   let className = props.className
@@ -90,7 +70,6 @@ export const WysiwygSettings = () => {
 
   return (
     <div>
-      <AvailableDynamicContent />
       <div
         className={editorStyles.editor}
       >
