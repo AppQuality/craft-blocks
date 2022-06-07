@@ -1,3 +1,15 @@
+# v0.1.27 (Tue Jun 07 2022)
+
+#### ⚠️ Pushed to `main`
+
+- feat: use dynamic info only in buttons and app preview ([@iacopolea](https://github.com/iacopolea))
+
+#### Authors: 1
+
+- Iacopo Leardini ([@iacopolea](https://github.com/iacopolea))
+
+---
+
 # v0.1.26 (Wed Jun 01 2022)
 
 #### ⚠️ Pushed to `main`
