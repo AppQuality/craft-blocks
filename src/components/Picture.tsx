@@ -5,7 +5,6 @@ import {
   Input,
 } from "@appquality/appquality-design-system";
 import { useNode } from "@craftjs/core";
-import React from "react";
 import { MarginSettings, useMargins } from "./generic/Margins";
 
 interface PictureProps extends MarginProps {
@@ -68,8 +67,10 @@ export const PictureSettings = () => {
   return (
     <BSGrid>
       <BSCol size="col-12">
-        <FormLabel label="Picture src" />
+        <FormLabel htmlFor="input-src" label="Picture src" />
         <Input
+          id="input-src"
+          type="text"
           placeholder="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg"
           value={src}
           onChange={(e: string) =>
@@ -78,8 +79,10 @@ export const PictureSettings = () => {
         />
       </BSCol>
       <BSCol size="col-12">
-        <FormLabel label="Picture title (alt)" />
+        <FormLabel htmlFor="input-title" label="Picture title (alt)" />
         <Input
+          id="input-title"
+          type="text"
           value={title}
           onChange={(e: string) =>
             setProp((props: PictureProps) => (props.title = e))
@@ -87,20 +90,22 @@ export const PictureSettings = () => {
         />
       </BSCol>
       <BSCol size="col-12">
-        <FormLabel label="Image width" />
+        <FormLabel htmlFor="input-width" label="Image width" />
         <Input
-          defaultValue={PictureDefaultProps.width}
-          value={width}
+          id="input-width"
+          type="text"
+          value={width || PictureDefaultProps.width}
           onChange={(e: string) =>
             setProp((props: PictureProps) => (props.width = e))
           }
         />
       </BSCol>
       <BSCol size="col-12">
-        <FormLabel label="Image height" />
+        <FormLabel htmlFor="input-height" label="Image height" />
         <Input
-          defaultValue={PictureDefaultProps.height}
-          value={height}
+          id="input-height"
+          type="text"
+          value={height || PictureDefaultProps.height}
           onChange={(e: string) =>
             setProp((props: PictureProps) => (props.height = e))
           }

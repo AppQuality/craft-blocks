@@ -1,10 +1,10 @@
 interface MarginProps {
   allSides?: boolean;
-  allSidesMargin?: number;
-  topMargin?: number;
-  bottomMargin?: number;
-  leftMargin?: number;
-  rightMargin?: number;
+  allSidesMargin?: string;
+  topMargin?: string;
+  bottomMargin?: string;
+  leftMargin?: string;
+  rightMargin?: string;
 }
 interface BasicElementProps {
   className?: string;
