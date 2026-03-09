@@ -7,16 +7,16 @@ import {
   FormLabel,
   Input
 } from "@appquality/appquality-design-system";
-import React, {useContext, useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 import { MarginSettings, useMargins } from "./generic/Margins";
-import {AvailableDynamicContent} from "src/components/generic/AvailableDynamicContent";
+import { AvailableDynamicContent } from "src/components/generic/AvailableDynamicContent";
 import EditorContext from "src/components/EditorContext";
 import populateDynamicContent from "src/utils/populateDynamicContent";
 
-interface ButtonProps extends MarginProps{
+interface ButtonProps extends MarginProps {
   text: string;
   type?: string;
-  size: string;
+  size: "sm" | "medium" | "lg";
   link: string;
   color: string;
   onClick?: () => void;
@@ -31,7 +31,7 @@ export const Button = ({ size, link, color, text, ...props }: ButtonProps) => {
   } = useNode(node => ({
     isSelected: node.events.selected
   }));
-  const {resolver, resolveDynamicContent} = useContext(EditorContext);
+  const { resolver, resolveDynamicContent } = useContext(EditorContext);
   let className = useMargins(props);
   if (isSelected) className = `${className} craftjs-node-selected`;
 
@@ -89,15 +89,19 @@ export const ButtonSettings = () => {
         <AvailableDynamicContent />
       </BSCol>
       <BSCol size="col-12 aq-mb-3">
-        <FormLabel htmlfor="input-text" label="Text" />
+        <FormLabel htmlFor="input-text" label="Text" />
         <Input
+          id="input-text"
+          type="text"
           onChange={(e: any) => setProp((props: ButtonProps) => (props.text = e))}
           value={props.text}
         />
       </BSCol>
       <BSCol size="col-12 aq-mb-3">
-        <FormLabel htmlfor="input-link" label="Link" />
+        <FormLabel htmlFor="input-link" label="Link" />
         <Input
+          id="input-link"
+          type="text"
           onChange={(e: any) => setProp((props: ButtonProps) => (props.link = e))}
           value={props.link}
         />
@@ -107,8 +111,8 @@ export const ButtonSettings = () => {
           name="input-size"
           label="Size"
           options={sizeOptions}
-          value={currentSize || {label: "", value: ""}}
-          onChange={e => setProp((props: ButtonProps) => (props.size = e.value || ""))}
+          value={currentSize || { label: "", value: "" }}
+          onChange={e => setProp((props: ButtonProps) => (props.size = e.value as "sm" | "medium" | "lg"))}
         />
       </BSCol>
       <BSCol size="col-12 aq-mb-3">
@@ -116,7 +120,7 @@ export const ButtonSettings = () => {
           name="input-color"
           label="Color"
           options={colorOptions}
-          value={currentColor|| {label: "", value: ""}}
+          value={currentColor || { label: "", value: "" }}
           onChange={e => setProp((props: ButtonProps) => (props.color = e.value || ""))}
         />
       </BSCol>

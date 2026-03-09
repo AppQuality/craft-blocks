@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {useNode} from "@craftjs/core";
+import { useEffect, useState } from "react";
+import { useNode } from "@craftjs/core";
 import {
   Button,
   Text,
@@ -11,38 +11,38 @@ import {
 
 interface SideMarginSettingsProps {
   value: number;
-  set: (e: number) => void;
+  set: (e: string) => void;
 }
 
 const SideMarginSettings = ({ value, set }: SideMarginSettingsProps) => {
   return value <= 0 ? (
-    <Button size="sm" flat={true} onClick={() => set(1)}>
+    <Button size="sm" flat={true} onClick={() => set("1")}>
       Set margin
     </Button>
   ) : (
     <>
       <Input
+        id="input-margin"
         type="number"
-        min="-1"
-        max="3"
-        value={value}
-        onChange={(e:number) => e < 4 && set(e)}
+        value={`${value}`}
+        onChange={(e: string) => parseInt(e) < 4 && parseInt(e) >= -1 && set(e)}
       />
     </>
   );
 };
 
 
-export const useMargins = ({allSidesMargin, allSides, topMargin, leftMargin, rightMargin, bottomMargin}: MarginProps) => {
+export const useMargins = ({ allSidesMargin, allSides, topMargin, leftMargin, rightMargin, bottomMargin }: MarginProps) => {
   function hasAllSidesMargin() {
     return allSides;
   }
-  function isPositive(aNumeric?: number) {
-    return aNumeric && aNumeric > 0;
+  function isPositive(aNumeric?: string) {
+    if (!aNumeric || isNaN(parseInt(aNumeric))) return false;
+    return aNumeric && parseInt(aNumeric) > 0;
   }
   function getAllSidesMargin() {
     if (isPositive(allSidesMargin)) {
-      return  `aq-m-${allSidesMargin}`;
+      return `aq-m-${allSidesMargin}`;
     }
     return "";
   }
@@ -91,14 +91,14 @@ export const MarginSettings = () => {
   }, [props.allSides]);
   return (
     <div className="aq-mb-3" style={{ float: "left", width: "100%" }}>
-      <FormLabel htmlfor="input-margin" label="Margin" />
+      <FormLabel htmlFor="input-margin" label="Margin" />
       <Text className="aq-my-2">
         All Sides
         <input
           type="checkbox"
           defaultChecked={allSides}
           onChange={() => setProp((props: MarginProps) => {
-            return(props.allSides = !props.allSides)
+            return (props.allSides = !props.allSides)
           })}
         />
       </Text>
